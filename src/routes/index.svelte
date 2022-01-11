@@ -1,85 +1,76 @@
 <script>
-
-
-	const router ={
-		name: "Test",
-		value: 40,
-		operations: [
-			{
-				name: "Op1",
-				value: 30,
-				elements: [
-					{
-						name: "El1.1",
-						value: 19,
-					},
-					{
-						name: "El1.2",
-						value: 11,
-					}
-				]
-			},
-			{
-				name: "Op2",
-				value: 10,
-				elements: [
-					{
-						name: "El2.1",
-						value: 5,
-					},
-					{
-						name: "El2.2",
-						value: 5,
-					}
-				]
-			},
-		]
-	};
+	import {routers} from "../routers.js";
+	import "../app.css";
 	
 	
 	// both the operation and router values should never be manually set
 	// always derive value from elements
 	const updateRouterTime = () => {
-		let routerVal = 0;
+		let routerTime = 0;
 		
 		// operation value is the sum of the elements value
-		router.operations.forEach(op => {
-			op.value = op.elements.reduce((sum, el) => sum + el.value, 0);
-			 routerVal = routerVal  + op.value;
+		routers.operations.forEach(op => {
+			op.time = op.elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
+			 routerTime = routerTime + parseFloat(op.time);
 		});
 		
 		// router value is the sum of the operations value
-		router.value = routerVal;
+		routers.time = routerTime;
 	}
 	
-
 	
 </script>
 
-<div class="app">
-<header>KWIQ</header>
 
-<section class="main">
-	<div style="display: flex;">
-		<div contenteditable="true" bind:innerHTML="{router.name}"> | </div> <div> Time: {router.value}</div>
-	</div>
-	<ul>
-		{#each router.operations as operation}
-			<li>
-				<div contenteditable="true" bind:innerHTML="{operation.name}"></div>
-				<div>Time: {operation.value}</div>
-				<ol>
-					{#each operation.elements as element}
+<section id="app">
+	<section id="list">
+		<ul>
+			<li>{routers.description}</li>
+		</ul>
+	</section>
+	<section id="detail">
+		<header class="router-detail">
+			<h1>{routers.description}</h1>
+			<h2>{routers.createdBy}</h2>
+			<output>{routers.time}</output>
+		</header>
+		<section class="operations">
+			{ #each routers.operations as operation }
+			<details class="operation">
+				<summary>
+					<span>{operation.number}</span> |
+					<span>{operation.description}</span> |
+					<output>{operation.time}</output> |
+					<span>{operation.elements.length}</span>
+				</summary>
+				
+				<!-- Additional Operation details //-->
+				
+				<div class="opertaion--details">
+					<span>{operation.setupTime}</span> | 
+					<span>{operation.personalFatigueAndDelay}</span>
+					<span>{operation.notes}</span>
+				</div>
+				
+				<ol class="elements">
+				{ #each operation.elements as element }
 					<li>
-						<div contenteditable="true" bind:innerHTML="{element.name}"></div>
-						<input type="number" bind:value="{element.value}" on:change="{updateRouterTime}">	
+						<div>
+							<span>{element.description}</span> |
+							<input type="number" min="0" step="0.1" on:change="{updateRouterTime}" bind:value="{element.time}">
+						</div>
+						<div>
+							<span>{element.frequency} x {element.compoundFrequency}</span> |
+							<span>{element.weight}</span> |
+							<span>{element.distance}</span> |
+							<span>{element.valueAdd}</span>
+						</div>
 					</li>
-					{/each}
+					
+				{ /each }
 				</ol>
-			</li>
-		{/each}
-	</ul>
-	
+			</details>
+			{/each}
+		</section>
+	</section>
 </section>
-
-</div>

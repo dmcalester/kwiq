@@ -1,0 +1,33 @@
+body {
+	font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+#app {
+	display: flex;
+	height: 100vh;
+}
+
+#list {
+	padding: 1rem;
+	outline: 1px solid red;
+}
+
+#list ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#list li {
+	cursor: pointer;
+}
+
+#detail {
+	padding: 1rem;
+}
+
+output {
+	font-family: monospace;
+}

@@ -4,6 +4,15 @@ body {
 	padding: 0;
 }
 
+input[type=text] {
+	display: block;
+	margin: 0.5rem;
+	border: 1px solid black;
+	padding: 0.5rem;
+	
+	box-shadow: inset 5px 0 5px rgba(0,0,0,.13);
+}
+
 #app {
 	display: flex;
 	flex-wrap: wrap;
@@ -14,15 +23,20 @@ body {
 
 #menu {
 	width: 100vw;
-	height: 5rem;
 	padding: 1rem;
-	outline: 1px solid blue;
-	
+	background-color: color(srgb 0.141 0.06 0.137);
+	color: #fff;
+}
+
+#menu h1 {
+	margin: 0;
+	padding: 0;
 }
 
 #routers {
 	width: 100vw;
 	padding: .5rem;
+	margin: 1rem;
 	outline: 1px solid red;
 }
 
@@ -43,7 +57,13 @@ body {
 #detail {
 	width: 100vw;
 	padding: .5rem;
+	margin: 0 1rem;
 	outline: 1px solid green;
-	
-	
+}
+
+
+.new-router {
+	display: flex;
+	justify-content: space-between;
+	align-content: stretch;
 }

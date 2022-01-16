@@ -1,17 +1,16 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import { collection, doc, getDocs, getDoc, onSnapshot, query } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
-	
-	import '../../app.css';
 	
 	let router = {};
 	let operations = [];
 	
 	
 	
-	onMount(async () => {
+	afterNavigate(async () => {
 		onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
 				router = { id: doc.id, ...doc.data()};
 				console.log(router)

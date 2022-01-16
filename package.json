@@ -11,16 +11,16 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "^1.0.0-next.232",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-svelte3": "^3.2.1",
+    "eslint-plugin-svelte3": "^3.4.0",
     "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
-    "svelte": "^3.44.0"
+    "prettier-plugin-svelte": "^2.6.0",
+    "svelte": "^3.46.2"
   },
   "type": "module",
   "dependencies": {
-    "firebase": "^9.4.1"
+    "firebase": "^9.6.3"
   }
 }

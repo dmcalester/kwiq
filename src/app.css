@@ -6,28 +6,44 @@ body {
 
 #app {
 	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	gap: 1rem;
 	height: 100vh;
 }
 
-#list {
+#menu {
+	width: 100vw;
+	height: 5rem;
 	padding: 1rem;
+	outline: 1px solid blue;
+	
+}
+
+#routers {
+	width: 100vw;
+	padding: .5rem;
 	outline: 1px solid red;
 }
 
-#list ul {
-	padding: 0;
-	margin: 0;
+#routers ul {
 	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-#list li {
+#routers li {
+	padding: 0.5rem;
+	margin: 0.5rem;
+	border: 1px solid #ccc;
+	
 	cursor: pointer;
 }
 
 #detail {
-	padding: 1rem;
-}
-
-output {
-	font-family: monospace;
+	width: 100vw;
+	padding: .5rem;
+	outline: 1px solid green;
+	
+	
 }

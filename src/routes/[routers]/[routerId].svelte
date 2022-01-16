@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { collection, doc, getDocs, getDoc, onSnapshot } from "firebase/firestore"; 
+	import { collection, doc, getDocs, getDoc, onSnapshot, query } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
 	
 	import '../../app.css';
@@ -12,22 +12,26 @@
 	
 	
 	onMount(async () => {
-		const _router = onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
+		onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
 				router = { id: doc.id, ...doc.data()};
 				console.log(router)
 		});
+		
+		const operationsSnapshot = await getDocs(collection(db, "routers", $page.params.routerId, "operations"));
+		operations = operationsSnapshot.docs.map((doc) => {
+			return { id: doc.id, ...doc.data() };
+		})
 	})
 	
 	
 	
 </script>
 
-<input bind:value="{router.description}" />
-<h2>What now?</h2>
+<h1>{router.description}</h1>
 
-{ #if router.operation && router.operation.length }
+{ #if operations && operations.length }
 <ul>
-	{ #each router.operations as operation }
+	{ #each operations as operation }
 		<li>{operation.description}</li>
 	{ /each }
 </ul>

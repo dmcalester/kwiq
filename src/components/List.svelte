@@ -45,8 +45,6 @@
 	const deleteRouter = async(docId) => {
 		const docRef = await deleteDoc(doc(db, 'routers', docId));
 		
-		
-		
 		/* Determine if there is an operations subcollection
 		const q = query(collection(db, 'routers', docId, 'operations'), limit(1));
 		onSnapshot(q, (querySnapshot) => {
@@ -63,7 +61,7 @@
 
 <section id="routers">
 	<h2>Routers</h2>
-	<div class="new-router">
+	<div class="new-item new-item--router">
 		<input type="text" bind:value="{newRouterDescription}" />
 		<button on:click={addRouter}>Add</button>
 	</div>
@@ -72,7 +70,7 @@
 		{ #each routers as router }
 		<li>
 			<div on:click={() => goto(`/routers/${router.id}`)}>{router.description}</div>
-			<div>{router.createdAt}</div>
+			
 			<button on:click={deleteRouter(router.id)}>X</button>
 		</li>
 		{ /each}

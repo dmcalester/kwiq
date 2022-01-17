@@ -33,11 +33,15 @@ input[type=text] {
 	padding: 0;
 }
 
+#routers h2 {
+	margin: 0;
+	padding: 0;
+}
+
 #routers {
 	width: 100vw;
 	padding: .5rem;
 	margin: 1rem;
-	outline: 1px solid red;
 }
 
 #routers ul {
@@ -47,6 +51,8 @@ input[type=text] {
 }
 
 #routers li {
+	display: flex;
+	justify-content: space-between;
 	padding: 0.5rem;
 	margin: 0.5rem;
 	border: 1px solid #ccc;
@@ -62,7 +68,9 @@ input[type=text] {
 }
 
 
-.new-router {
+.new-item {
+	background-color: #ddd;
+	padding: 0.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-content: stretch;

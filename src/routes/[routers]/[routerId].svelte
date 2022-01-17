@@ -6,26 +6,29 @@
 	import { db } from '../../fb.js'
 	
 	
-	
-	
-	
 	let router = {};
 	let operations = [];
-	
 	let newOperationDescription = '';
 	let newElementDescription = '';
 	
-	// before or after navigate?
+	const operationsCol = (routerId) => {
+	 return collection(db, "routers", routerId, "operations");
+	}
+	
+	const docRef = (routerId, operationId) => {
+		return doc(db, 'routers', routerId, 'operations', operationId);
+	}
+	
+
 	afterNavigate(async () => {
 		onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
 				router = { id: doc.id, ...doc.data()};
 		});
 		
 		
-		// This DOES subscribe to live data. Need to consider the UX and performance
-		// implications of the snapshot
-		const operationsCol = collection(db, "routers", $page.params.routerId, "operations");
-		const queryAllOperations = query(operationsCol);
+		// Subscribes to a live collection of the operations in the sub-collection of the
+		// current router
+		const queryAllOperations = query(operationsCol($page.params.routerId));
 		onSnapshot(queryAllOperations, (querySnapshot) => {
 			operations = querySnapshot.docs.map(doc => {
 				return { id: doc.id, ...doc.data() }
@@ -36,40 +39,69 @@
 	
 	/* OPERATION CRUD */
 	const addOperation = async() => {
-		const docRef = await addDoc(collection(db, "routers", router.id, "operations"), {
+		/*
+		** 	TODO
+				Account for the following additional fields
+				- modifiedBy 		// overkill remove
+				- createdBy 		// overkill remove
+				- massUpdateId 	// create an index for massUpdate
+				- order					// integer, auto incremented unless specifically changed
+				- time					// auto calculated int/float?
+				- setupTime			// int/float?
+				- pfd						// int/float?
+				- number				// part number should be string, should be id; unique
+				- notes					// string
+				- customFields	// next version
+		*/
+		
+		const opRef = await addDoc(operationsCol($page.params.routerId), {
 			description: newOperationDescription,
 			createdAt: new Date()
 		})
 	}
 	
 	
-	const deleteOperation = async(docId) => {
-		const docRef = await deleteDoc(doc(db, 'routers', router.id, 'operations', docId));
+	const deleteOperation = async(opId) => {
+		const opRef = await deleteDoc(docRef(router.id, opId));
 	}
 	
 	
 	/* ELEMENT CRUD */
-	const addElement = async(docId) => {
+	const addElement = async(elId) => {
+		/*
+		** 	TODO
+				Account for the following additional fields
+				- number				// Essentially order, rename and auto increment
+				- modifiedBy 		// overkill remove
+				- createdBy 		// overkill remove
+				- massUpdateId 	// create an index for massUpdate
+				- distance			// int/float?
+				- typeOption		// ?? int/float?
+				- typeOptionModifier // ?? int/float?
+				- frequency			// change to array [0,0]
+				- compoundFrequency // second vale in frequency array
+				- weight				// int/float
+				- time					// int/float?? currently a string
+				- valueAdd			// string Value Add | Non Value Add | Essential Non Value Add
+				- code					// string
+				- setup					// bool
+				- type					// string
+				- directInputVal // float/int
+		*/
 		
-		const elementRef = doc(db, "routers", router.id, 'operations', docId);
+		const elementRef = docRef(router.id, elId);
 		
 		await updateDoc(elementRef, {
 			elements: arrayUnion({
 				description: newElementDescription,
 				createdAt: new Date()
 			})
-		})
+		});
 	}
 	
 	
 	const deleteElement = async(docId, elementId) => {
-		console.log('delete element', elementId)
 		
-		const elementRef = doc(db, "routers", router.id, 'operations', docId);
-		
-		await updateDoc(elementRef, {
-			elements: arrayRemove(elementId)	
-		})
 	}
 	
 </script>

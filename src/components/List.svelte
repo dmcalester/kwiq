@@ -18,12 +18,6 @@
 				return { id: doc.id, ...doc.data() }
 			})
 		});
-		
-		// Get routers once
-		// const routerSnapshot = await getDocs(collection(db, "routers"));
-		// routers = routerSnapshot.docs.map((doc) => {
-		// 	return { id: doc.id, ...doc.data() };
-		// })
 	})
 	
 	

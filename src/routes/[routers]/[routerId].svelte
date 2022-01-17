@@ -1,17 +1,17 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
-	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query } from "firebase/firestore"; 
+	import { collection, doc, getDocs, getDoc, onSnapshot, query } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
+	
+	
 	
 	let router = {};
 	let operations = [];
 	
-	let newOperationDescription = '';
 	
 	
-	afterNavigate(async () => {
+	onMount(async () => {
 		onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
 				router = { id: doc.id, ...doc.data()};
 				console.log(router)
@@ -38,40 +38,17 @@
 	})
 	
 	
-	const addOperation = async() => {
-		const docRef = await addDoc(collection(db, "routers", router.id, "operations"), {
-			description: newOperationDescription,
-			createdAt: new Date()
-		})
-	}
-	
-	
-	const deleteOperation = async(docId) => {
-		console.log('delete op', router.id, docId);
-		const docRef = await deleteDoc(doc(db, 'routers', router.id, 'operations', docId));
-		
-	}
-	
-	
 	
 </script>
 
-<div id="detail">
-	<h1>{router.description}</h1>
-	<div class="new-item new-item--operation">
-		<input type="text" bind:value="{newOperationDescription}" />
-		<button on:click={addOperation}>Add</button>
-	</div>
+<h1>{router.description}</h1>
+
 { #if operations && operations.length }
 <ul>
 	{ #each operations as operation }
-		<li>
-			<div>{operation.description}</div>
-			<button on:click={deleteOperation(operation.id)}>X</button>
-		</li>
+		<li>{operation.description}</li>
 	{ /each }
 </ul>
 { /if }
 
 { $page.params.routerId }
-</div>

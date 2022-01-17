@@ -5,7 +5,7 @@
 	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
 	
-	import "../../app.css";
+	
 	
 	
 	
@@ -62,13 +62,13 @@
 	}
 	
 	
-	const deleteElement = async(docId, arrayIndex) => {
-		console.log('delete element', docId)
+	const deleteElement = async(docId, elementId) => {
+		console.log('delete element', elementId)
 		
 		const elementRef = doc(db, "routers", router.id, 'operations', docId);
 		
 		await updateDoc(elementRef, {
-			elements: arrayRemove(arrayIndex)	
+			elements: arrayRemove(elementId)	
 		})
 	}
 	
@@ -103,7 +103,7 @@
 					<div class="elements">
 						<ul>
 							{ #each operation.elements as element, i }
-								<li><span>{element.description}</span> <button on:click={() => deleteElement(operation.id, i)}>X</button></li>
+								<li><span>{element.id}</span> <button on:click={() => deleteElement(operation.id, element.id)}>X</button></li>
 							{ /each }
 						</ul>
 					</div>

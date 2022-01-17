@@ -2,7 +2,7 @@
 	import Header from '../components/Header.svelte';	
 	import List from '../components/List.svelte';
 	
-	import '../app.css';
+	import '../css/app.css';
 </script>
 
 <div id="app">

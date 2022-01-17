@@ -4,13 +4,12 @@
 	import { collection, doc, getDocs, addDoc, query, onSnapshot, deleteDoc, limit } from "firebase/firestore"; 
 	import { db } from '../fb.js'
 	
-	
-	
 	let routers = [];
 	let newRouterDescription = '';
 	
 	const routersCol = collection(db, "routers");
 	const queryAllRouters = query(routersCol);
+	
 	
 	onMount(async () => {
 		onSnapshot(queryAllRouters, (querySnapshot) => {
@@ -23,9 +22,21 @@
 	
 	/* CRUD Operations */
 	const addRouter = async() => {
-		const docRef = await addDoc(collection(db, "routers"), {
+		/*
+		** 	TODO
+				Account for the following additional fields
+				- modifiedBy 		// do we still need this or is it overkill? Should probably be user object?
+				- projectId 		// maybe a better way to associated projects? one-to-many root collection
+				- massUpdateId 	// create an index for massUpdate
+				- isDeleted 		// see if this is still the best way to handle deletion
+		*/
+		
+		const docRef = await addDoc(routersCol, {
 			description: newRouterDescription,
-			createdAt: new Date()
+			createdAt: new Date(),
+			createdBy: "Peter Parker",
+			batch: 1,
+			time: 0
 		}
 	)}
 		
@@ -38,15 +49,6 @@
 	*/
 	const deleteRouter = async(docId) => {
 		const docRef = await deleteDoc(doc(db, 'routers', docId));
-		
-		/* Determine if there is an operations subcollection
-		const q = query(collection(db, 'routers', docId, 'operations'), limit(1));
-		onSnapshot(q, (querySnapshot) => {
-			if(querySnapshot.docs.length > 0) {
-				console.log('This has')
-			}
-		})
-		*/		
 	}
 		
 		

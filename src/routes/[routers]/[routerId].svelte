@@ -135,7 +135,7 @@
 					<div class="elements">
 						<ul>
 							{ #each operation.elements as element, i }
-								<li><span>{element.id}</span> <button on:click={() => deleteElement(operation.id, element.id)}>X</button></li>
+								<li><span>{element.description}</span> <button on:click={() => deleteElement(operation.id, element.id)}>X</button></li>
 							{ /each }
 						</ul>
 					</div>

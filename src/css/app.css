@@ -4,15 +4,6 @@ body {
 	padding: 0;
 }
 
-input[type=text] {
-	display: block;
-	margin: 0.5rem;
-	border: 1px solid black;
-	padding: 0.5rem;
-	
-	box-shadow: inset 5px 0 5px rgba(0,0,0,.13);
-}
-
 #app {
 	display: flex;
 	flex-wrap: wrap;
@@ -71,7 +62,6 @@ input[type=text] {
 .new-item {
 	background-color: #ddd;
 	padding: 0.5rem;
-	display: flex;
-	justify-content: space-between;
-	align-content: stretch;
+	margin: 0.5rem;
+	
 }

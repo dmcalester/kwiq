@@ -7,9 +7,14 @@
 	
 	
 	let router = {};
-	let operations = [];
-	let newOperationDescription = '';
-	let newElementDescription = '';
+	
+
+	let newRouter = {
+		createdBy: "Peter Parker"
+	};
+	
+	let newOperation = {}
+	let newElement = {}
 	
 	const operationsCol = (routerId) => {
 	 return collection(db, "routers", routerId, "operations");
@@ -25,16 +30,35 @@
 				router = { id: doc.id, ...doc.data()};
 		});
 		
-		
 		// Subscribes to a live collection of the operations in the sub-collection of the
 		// current router
 		const queryAllOperations = query(operationsCol($page.params.routerId));
 		onSnapshot(queryAllOperations, (querySnapshot) => {
-			operations = querySnapshot.docs.map(doc => {
+			router.operations = querySnapshot.docs.map(doc => {
 				return { id: doc.id, ...doc.data() }
 			})
 		});
-	})
+	});
+	
+	/* Router CRUD */
+	/*
+	**	TODO
+			Return created doc
+	*/
+	const addRouter = async() => {
+		const docRef = await addDoc(collection(db, "routers"), {
+			description: newRouter.description,
+			batch: newRouter.batch,
+			createdAt: new Date(),
+			createdBy: newRouter.createdBy,
+			 time: 0 
+		});
+	}
+	
+	const updateRouter = async() => {
+		const routerRef = 
+		await updateDoc()
+	}
 	
 	
 	/* OPERATION CRUD */
@@ -55,8 +79,9 @@
 		*/
 		
 		const opRef = await addDoc(operationsCol($page.params.routerId), {
-			description: newOperationDescription,
-			createdAt: new Date()
+			description: newOperation.description,
+			createdAt: new Date(),
+			time: 0
 		})
 	}
 	
@@ -93,8 +118,9 @@
 		
 		await updateDoc(elementRef, {
 			elements: arrayUnion({
-				description: newElementDescription,
-				createdAt: new Date()
+				description: newElement.description,
+				createdAt: new Date(),
+				time: 0
 			})
 		});
 	}
@@ -104,29 +130,75 @@
 		
 	}
 	
+	
+	
+	// both the operation and router values should never be manually set
+	// always derive value from elements
+	const updateRouterTime = () => {
+		
+		
+		let routerTime = 0;
+		
+		// operation value is the sum of the elements value
+		router.operations.forEach(op => {
+			console.log(op)
+			op.time = op.elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
+			 routerTime = routerTime + parseFloat(op.time);
+		});
+		
+		console.log('routerTime',routerTime)
+		// router value is the sum of the operations value
+		router.time = routerTime;
+	}
+	
 </script>
 
 <div id="router">
 	<div class="router--details">
 		<h1>{router.description}</h1>
 		<h2>{ $page.params.routerId }</h2>
+		<dl>
+			<dt>Batch</dt>
+			<dd>{router.description}</dd>
+			<dt>Created at</dt>
+			<dd>{router.createdAt}</dd>
+			<dt>Author</dt>
+			<dd>{router.createdBy}</dd>
+			<dt>time</dt>
+			<dd>{router.time}</dd>
+		</dl>
+		
+		<div class="new-item new-item--router">
+			<h3>Add Router</h3>
+			<label>Description</label>
+			<input type="text" bind:value="{newRouter.description}" />
+			<label>Batch</label>
+			<input type="number" bind:value="{newRouter.batch}" />
+			
+			<button on:click={addRouter}>Add</button>
+		</div>
 	</div>
 	
 	<div id="operations">
 		
 		<div class="new-item new-item--operation">
-			<input type="text" bind:value="{newOperationDescription}" />
+			<h3>Add Operation</h3>
+			<input type="text" bind:value="{newOperation.description}" />
 			<button on:click={addOperation}>Add</button>
 		</div>
 	
-	{ #if operations && operations.length }
-		{ #each operations as operation }
+	{ #if router.operations && router.operations.length }
+		{ #each router.operations as operation }
 			<details>
 
-				<summary>{operation.description} <button on:click={deleteOperation(operation.id)}>X</button></summary>
+				<summary>
+					<div>Desc: {operation.description}</div>
+					<div>Time: {operation.time}</div>
+					<button on:click={deleteOperation(operation.id)}>X</button>
+				</summary>
 				
 				<div class="new-item new-item--element">
-					<input type="text" bind:value="{newElementDescription}" />
+					<input type="text" bind:value="{newElement.description}" />
 					<button on:click={addElement(operation.id)}>Add</button>
 				</div>
 				
@@ -135,7 +207,10 @@
 					<div class="elements">
 						<ul>
 							{ #each operation.elements as element, i }
-								<li><span>{element.description}</span> <button on:click={() => deleteElement(operation.id, element.id)}>X</button></li>
+								<li>
+									<div>Desc: {element.description}</div> 
+									<div>Time: <input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateRouterTime}"/>
+									<button on:click={() => deleteElement(operation.id, element.id)}>X</button></li>
 							{ /each }
 						</ul>
 					</div>

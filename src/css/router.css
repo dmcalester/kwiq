@@ -40,7 +40,8 @@
 	background-color: #eee;
 }
 
-.operation__summary {
+.operation__summary,
+.operation__header {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
@@ -48,14 +49,18 @@
 }
 
 .operation__time {
-	order: 1;
+	order: 2;
 	text-align: right;
 	max-width: 3rem;
 	min-width: 2rem;
 }
 
+.operation__number {
+	 order: 1;
+}
+
 .operation__description {
-	 order: 2;
+	 order: 3;
 }
 
 .operations__description-new {
@@ -63,7 +68,7 @@
 }
 
 .operation__action {
-	 order: 3;
+	 order: 4;
 	 margin-left: auto;
 }
 

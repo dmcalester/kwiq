@@ -45,14 +45,6 @@
 				return { id: doc.id, ...doc.data() }
 			})
 		});
-		
-		// const querySnapshot = await getDocs(collection(db, "routers", $page.params.routerId, "operations"));
-		// operations = querySnapshot.docs.map(doc => {
-		// 	return { id: doc.id, ...doc.data() }
-		// })
-		
-		
-		
 	});
 	
 	/* Router CRUD */
@@ -68,11 +60,6 @@
 	// }
 	
 	
-	const optimisticNewOperation = () => {
-		newOperation.description = 'hello there';
-		newOpDesc = "hello there";
-		console.log(newOperation);
-	}
 	
 	/* OPERATION CRUD */
 	const addOperation = async() => {
@@ -194,23 +181,23 @@
 	</div>
 	
 	<section id="operations">
-		<!--
-		<div class="new-item new-item--operation">
-			<h3>Add Operation</h3>
-			<input type="text" bind:value="{newOperation.description}" />
-			<button on:click={addOperation}>Add</button>
-		</div>
-		//-->
 	{ #if operations && operations.length }
 	<header class="operations__header">
 		<h1 class="operations__meta">{operations.length} Operations</h1>
-		<button class="operations__new">New Operation</button>
+<!-- 		<button class="operations__new">New Operation</button> -->
 	</header>
 	<ul class="list operations__list">
+		<li class="operation operation__header">
+			<div class="operation__number">#</div>
+			<div class="operation__description">Time</div>
+			<div class="operation__time">Description</div>
+		
+		</li>
 		{ #each operations as operation }
 			<li class="operation">
 				<details class="operation__detail">
 					<summary class="operation__summary">
+						<div class="operation__number">{operation.number}</div>
 						<div class="operation__description">{operation.description}</div>
 						<div class="operation__time time">{operation.time}</div>
 						<button class="operation__action operation__action-delete" on:click={deleteOperation(operation.id)}>Delete</button>
@@ -224,11 +211,13 @@
 	
 					{ #if operation.elements && operation.elements.length }
 						<div class="elements">
+							
+								
 							<ul>
 								{ #each operation.elements as element, i }
-									<li style="display: flex;">
-										<div>Time: <input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateRouterTime}"/></div>
-										<div>Desc: {element.description}</div> 
+									<li>
+										<div><input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateRouterTime}"/></div>
+										<div><input type="text" bind:value="{element.description}"  /></div>
 										<button on:click={() => deleteElement(operation.id, element.id)}>X</button>
 									</li>
 								{ /each }

@@ -1,7 +1,3 @@
-<script>
-	
-</script>
-
-<header id="menu">
+<header id="header">
 	<h1>KWIQ</h1>
 </header>

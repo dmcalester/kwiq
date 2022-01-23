@@ -1,0 +1,22 @@
+/* list.css */
+
+.list--header {
+	display: flex;
+	background-color: green;
+	
+	justify-content: space-between;
+}
+
+.list--header-h2 {
+	padding: 0;
+	margin: 0;
+}
+
+
+.list--routers {
+	padding: 0;
+	margin: var(--gap) 0;
+	list-style: none;
+}
+
+

@@ -1,28 +1,83 @@
+:root {
+	--gap: 1rem;
+}
+
+
+
 body {
 	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
-}
-
-#app {
-	display: flex;
-	flex-wrap: wrap;
-	align-content: flex-start;
-	gap: 1rem;
-	height: 100vh;
-}
-
-#menu {
-	width: 100vw;
-	padding: 1rem;
-	background-color: color(srgb 0.141 0.06 0.137);
+	background-color: #2C394B;
+	background-color: color(display-p3 0.173 0.224 0.294)
+	
 	color: #fff;
 }
 
-#menu h1 {
+h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	padding: 0;
 }
+
+ul, ol {
+	list-style: none;
+}
+
+
+#app {
+	display: grid;
+	grid-template-rows: 3.5rem auto;
+	grid-template-columns: 20% auto;
+	height: 100vh;
+	gap: 0.5rem;
+	
+	
+}
+
+#header {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	grid-row: 1;
+	padding: 0.5rem;
+	
+	background-color: #2C394B;
+	background-color:color(display-p3 0.031 0.125 0.196);
+	color: #999;
+}
+
+#header h1 {
+	padding: 0;
+	margin: 0;
+	font-weight: 100;
+}
+
+#list {
+	background-color: red;
+	
+	grid-row: 2;
+	overflow-y: scroll;
+	padding: var(--gap);
+}
+
+
+
+#detail {
+	background-color: transparent;
+	grid-row: 2;
+	overflow-y: scroll;
+	padding-right: 0.5rem;
+}
+
+/*
+
+=============
+|  |
+
+
+
+*/
+
+
 
 #routers h2 {
 	margin: 0;
@@ -60,8 +115,14 @@ body {
 
 
 .new-item {
+	
 	background-color: #ddd;
 	padding: 0.5rem;
 	margin: 0.5rem;
 	
+}
+
+
+.time {
+	font-variant-numeric: tabular-nums;
 }

@@ -1,1 +1,74 @@
 /* router.css */
+
+.detail {
+	margin-right: 1rem;
+}
+.detail__header {
+	color: #fff;;
+}
+
+.detail__header h1 {
+	font-weight: 300;
+}
+
+
+.operations__header {
+	display: flex;
+	justify-content: space-between;
+	color: rgba(255,255,255,0.5);
+	margin-bottom: 1rem;
+}
+
+.operations__meta {
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 0;
+	margin: 0;
+}
+
+.operations__list {
+	padding: 0;
+	margin: 0;
+}
+
+.operation {
+	background-color: #fff;
+	
+}
+
+.operation:nth-child(even) {
+	background-color: #eee;
+}
+
+.operation__summary {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.15rem 0.5rem;
+}
+
+.operation__time {
+	order: 1;
+	text-align: right;
+	max-width: 3rem;
+	min-width: 2rem;
+}
+
+.operation__description {
+	 order: 2;
+}
+
+.operations__description-new {
+	font-style: italic;
+}
+
+.operation__action {
+	 order: 3;
+	 margin-left: auto;
+}
+
+[contenteditable] {
+	
+	border: 1px solid #eee;
+	border-radius: 4px;
+}

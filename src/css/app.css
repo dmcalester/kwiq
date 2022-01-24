@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0;
 }
 
-ul, ol {
+ul {
 	list-style: none;
 }
 
@@ -52,11 +52,10 @@ ul, ol {
 }
 
 #list {
-	background-color: red;
-	
 	grid-row: 2;
 	overflow-y: scroll;
-	padding: var(--gap);
+	padding: 0 var(--gap);
+	color: #fff;
 }
 
 
@@ -104,13 +103,6 @@ ul, ol {
 	border: 1px solid #ccc;
 	
 	cursor: pointer;
-}
-
-#router {
-	width: 100vw;
-	padding: .5rem;
-	margin: 0 1rem;
-	outline: 1px solid green;
 }
 
 

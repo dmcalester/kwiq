@@ -44,9 +44,9 @@
 	
 	
 	{ #if routers && routers.length }
-	<ul class="list list--routers">
+	<ul class="list list__routers">
 		{ #each routers as router }
-		<li>
+		<li class="list-router">
 			<div on:click={() => goto(`/routers/${router.id}`)}>{router.description}</div>
 		</li>
 		{ /each}

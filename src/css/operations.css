@@ -1,15 +1,4 @@
-/* router.css */
-
-.detail {
-	margin-right: 1rem;
-}
-.detail__header {
-	color: #fff;;
-}
-
-.detail__header h1 {
-	font-weight: 300;
-}
+/* operations.css */
 
 
 .operations__header {
@@ -70,10 +59,4 @@
 .operation__action {
 	 order: 4;
 	 margin-left: auto;
-}
-
-[contenteditable] {
-	
-	border: 1px solid #eee;
-	border-radius: 4px;
 }

@@ -1,0 +1,21 @@
+/* router.css */
+
+.detail {
+	margin-right: 1rem;
+}
+.detail__header {
+	color: #fff;
+}
+
+.detail__header h1 {
+	font-weight: 300;
+}
+
+
+[contenteditable] {
+	
+	border: 1px solid #eee;
+	border-radius: 4px;
+}
+
+

@@ -1,0 +1,37 @@
+<details class="operation__detail">
+					<summary class="operation__summary">
+						<div class="operation__number">{operation.number}</div>
+						<div class="operation__description">{operation.description}</div>
+						<div class="operation__time time">{operation.time}</div>
+						<button class="operation__action operation__action-delete" on:click={deleteOperation(operation.id)}>Delete</button>
+					</summary>
+				
+					
+<!-- 					<div class="new-item new-item--element">
+						<input type="text" bind:value="{newElement.description}" />
+						<button on:click={addElement(operation.id)}>Add</button>
+					</div> -->
+	
+					{ #if operation.elements && operation.elements.length }
+						<div class="elements">
+							
+								
+							<ol class="list elements_list">
+								<li class="element element__header">
+									<div class="element__number">#</div>
+									<div class="element__description">Time</div>
+									<div class="element__time">Description</div>
+								</li>
+								{ #each operation.elements as element, i }
+									<li class="element">
+										<div><input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateRouterTime}"/></div>
+										<div><input type="text" bind:value="{element.description}"  /></div>
+										<button class="element__action element__action-delete" on:click={() => deleteElement(operation.id, element.id)}>X</button>
+									</li>
+								{ /each }
+								
+							</ol>
+						</div>
+					{ /if }
+					
+				</details>

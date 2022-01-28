@@ -19,7 +19,11 @@
 				return { id: doc.id, ...doc.data() }
 			})
 		});
-	});	
+	});
+	
+	const loadRouter = (routerId) => {
+		goto(`/routers/${routerId}`);
+	}
 		
 </script>
 
@@ -47,7 +51,7 @@
 	<ul class="list list__routers">
 		{ #each routers as router }
 		<li class="list-router">
-			<div on:click={() => goto(`/routers/${router.id}`)}>{router.description}</div>
+			<div on:click={loadRouter(router.id)}>{router.description}</div>
 		</li>
 		{ /each}
 	</ul>

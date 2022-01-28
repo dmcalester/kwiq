@@ -1,72 +1,91 @@
 <script>
 	import { page } from '$app/stores';
+	import { createEventDispatcher } from 'svelte';
 	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove, orderBy } from "firebase/firestore"; 
 	import { db } from '../fb.js'
 
-	import Element from './Element.svelte';
+	// import Element from './Element.svelte';
 	import '../css/operations.css';
+	import '../css/elements.css';
 	
 	export let id;
 	export let description;
-	export let number;
+	// export let number;
 	export let time;
 	export let elements;
 	
+	
+	let newElement = {}
 	
 	const operationRef = (operationId) => {
 		return doc(db, 'routers', $page.params.routerId, 'operations', operationId);
 	}
 	
-	/* OPERATION CRUD */
-	const addOperation = async() => {
-		/*
-		** 	TODO
-				Account for the following additional fields
-				- modifiedBy 		// overkill remove
-				- createdBy 		// overkill remove
-				- massUpdateId 	// create an index for massUpdate
-				- order					// integer, auto incremented unless specifically changed
-				- time					// auto calculated int/float?
-				- setupTime			// int/float?
-				- pfd						// int/float?
-				- number				// part number should be string, should be id; unique
-				- notes					// string
-				- customFields	// next version
-		*/
+	/* ELEMENT CRUD */
+	const addElement = async() => {
+	
+		// const elementRef = docRef(router.id, elId);
 		
-		const opRef = await addDoc(operationsCol($page.params.routerId), {
-			description: newOperation.description,
-			createdAt: new Date(),
-			time: 0,
-			order: operations.length + 1
+		await updateDoc(operationRef(id), {
+			elements: arrayUnion({
+				description: newElement.description,
+				createdAt: new Date(),
+				time: newElement.time
+			})
 		});
-		
-		newOperation = {};
+		newElement = {};
+		updateOperationTime();
 	}
+	
+	
+	// const deleteElement = async(docId, elementId) => {
+	// 	
+	// }
 	
 	
 	const deleteOperation = async(operationId) => {
 		const opRef = await deleteDoc(operationRef(operationId));
 	}
 	
+	const dispatch = createEventDispatcher();
+	const updateOperationTime = async () => {
+		time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
+		dispatch('timeupdated', {
+			time: time
+		});	
+	
+		// update operation time
+		const res = await updateDoc(doc(db, 'routers', $page.params.routerId, 'operations', id), {
+			time: time,
+			elements: elements
+		});
+	}
+	
 	
 </script>
-<h1>Elements {elements.length}</h1>
-<details class="operation__detail">
+<details open class="operation__detail">
 	<summary class="operation__summary">
-		<div class="operation__number">{number}</div>
+<!-- 		<div class="operation__number">{number}</div> -->
 		<div class="operation__description">{description}</div>
-		<div class="operation__time time">{time}</div>
+		<div class="operation__time time">{time.toFixed(2)}</div>
 		<button class="operation__action operation__action-delete" on:click={deleteOperation(id)}>Delete</button>
 	</summary>
-	{ #if elements && elements.length }
 	<ol>
+	{ #if elements && elements.length }
+	
 		{ #each elements as element, i }
-			<Element 
-				time={element.time}
-				description={element.description}/>
+			<li class="element">
+				<div><input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateOperationTime}"/></div>
+				<div><input type="text" bind:value="{element.description}"  /></div>
+			<!-- 	<button class="element__action element__action-delete" on:click={() => deleteElement(operation.id, element.id)}>X</button> -->
+			</li>
 		{ /each }
-	</ol>
 	{ /if }
+	<li>
+		<div><input type="number" min="0" step="0.1" bind:value="{newElement.time}" /></div>
+		<div><input type="text" bind:value="{newElement.description}"  /></div>
+		<button class="operation__action operation__action-add" on:click={addElement}>Add</button>
+	</li>
+	</ol>
 </details>
 

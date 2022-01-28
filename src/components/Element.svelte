@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import { createEventDispatcher } from 'svelte';
 	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove, orderBy } from "firebase/firestore"; 
 	import { db } from '../fb.js'
 	
@@ -8,8 +9,12 @@
 	export let description;
 	export let time;
 	
+	const dispatch = createEventDispatcher();
+	
 	const updateRouterTime = () => {
-		console.log('test');
+		dispatch('timeupdated', {
+			time: time
+		})	
 	}
 </script>
 

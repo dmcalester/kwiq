@@ -14,9 +14,7 @@
 	let router = {};
 	let operations = [];
 	
-	let newOpDesc = "";
 
-	
 	let newOperation = {
 		description: ""
 	}
@@ -65,46 +63,6 @@
 	
 	
 	
-	/* ELEMENT CRUD */
-	const addElement = async(elId) => {
-		/*
-		** 	TODO
-				Account for the following additional fields
-				- number				// Essentially order, rename and auto increment
-				- modifiedBy 		// overkill remove
-				- createdBy 		// overkill remove
-				- massUpdateId 	// create an index for massUpdate
-				- distance			// int/float?
-				- typeOption		// ?? int/float?
-				- typeOptionModifier // ?? int/float?
-				- frequency			// change to array [0,0]
-				- compoundFrequency // second vale in frequency array
-				- weight				// int/float
-				- time					// int/float?? currently a string
-				- valueAdd			// string Value Add | Non Value Add | Essential Non Value Add
-				- code					// string
-				- setup					// bool
-				- type					// string
-				- directInputVal // float/int
-		*/
-		
-		const elementRef = docRef(router.id, elId);
-		
-		await updateDoc(elementRef, {
-			elements: arrayUnion({
-				description: newElement.description,
-				createdAt: new Date(),
-				time: 0
-			})
-		});
-	}
-	
-	
-	const deleteElement = async(docId, elementId) => {
-		
-	}
-	
-	
 	
 	
 	
@@ -112,29 +70,36 @@
 	// both the operation and router values should never be manually set
 	// always derive value from elements
 	const updateRouterTime = async() => {
-	
-		let routerTime = 0;
 		
-		// operation value is the sum of the elements value
-		operations.forEach((op, i) => {
-			if(op.elements && op.elements.length) {
-				op.time = op.elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
-				routerTime = routerTime + parseFloat(op.time);
-		 	}
-		});
+		var time = operations.reduce((sum, op) => sum + parseFloat(op.time), 0);
+		router.time = time;
 		
 		// update router time
 		const res = await updateDoc(doc(db, 'routers', router.id), {
-			time: routerTime
-		})
+			time: router.time
+		})	
+	}
+	
+	
+	/* OPERATION CRUD */
+	const addOperation = async() => {		
+		const opRef = await addDoc(operationsCol($page.params.routerId), {
+			description: newOperation.description,
+			createdAt: new Date(),
+			time: 0,
+			order: operations.length + 1,
+			elements: []
+		});
 		
+		newOperation = {};
 	}
 	
 </script>
 
 <div id="detail">
 	<div class="detail__header">
-		<h1>{router.time} | {router.description}</h1>
+		
+		<h1>{ #if router.time } {router.time.toFixed(2)} { /if } | {router.description}</h1>
 	</div>
 	
 	<section id="operations">
@@ -156,10 +121,10 @@
 			<li class="operation">
 				<Operation  
 					id={operation.id}
-					number={operation.number}
-					time={operation.time}
-					description={operation.description}
-					elements={operation.elements} />
+					bind:time={operation.time}
+					bind:description={operation.description}
+					bind:elements={operation.elements} 
+					on:timeupdated={updateRouterTime}/>
 			</li>
 		{ /each }
 		

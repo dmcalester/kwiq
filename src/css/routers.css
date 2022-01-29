@@ -1,7 +1,7 @@
 /* router.css */
 
 .detail {
-	margin-right: 1rem;
+	margin-right: var(--space-05);
 }
 .detail__header {
 	color: #fff;
@@ -14,8 +14,6 @@
 
 [contenteditable] {
 	
-	border: 1px solid #eee;
-	border-radius: 4px;
 }
 
 

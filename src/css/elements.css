@@ -1,5 +1,12 @@
 /* elements.css */
 
+
+.elements {
+	padding-left: var(--space-06);
+	background-color: #999;
+	border-top: 1px solid #333;
+}
+/*
 .element {
 	background-color: #fff;
 	display: flex;
@@ -17,3 +24,4 @@
 	 order: 4;
 	 margin-left: auto;
 }
+*/

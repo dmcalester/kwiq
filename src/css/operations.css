@@ -1,6 +1,45 @@
 /* operations.css */
 
 
+.operation { 
+	font-size: var(--font-02);
+}
+
+.operations__header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: var(--space-05);
+	color: rgba(255,255,255,0.5)
+}
+
+
+.operations__meta {
+	font-weight: 300;
+	font-size: var(--font-03);
+	padding: 0;
+	margin: 0;
+}
+
+.operation__time {
+	margin-left: auto;
+	margin-right: 0;
+}
+
+
+.list-header--operation {
+	padding-left: var(--gap-to-account-for-arrow-in-header);
+	padding-right: var(--gap-to-account-for-button-in-header);
+}
+
+.list-header--operation > * {
+	outline: 1px solid red;
+}
+
+.operation__number {
+	width: 5%;
+}
+
+/*
 .operations__header {
 	display: flex;
 	justify-content: space-between;
@@ -60,3 +99,4 @@
 	 order: 4;
 	 margin-left: auto;
 }
+*/

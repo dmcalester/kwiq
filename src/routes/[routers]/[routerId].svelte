@@ -98,48 +98,42 @@
 
 <div id="detail">
 	<div class="detail__header">
-		
 		<h1>{ #if router.time } {router.time.toFixed(2)} { /if } | {router.description}</h1>
 	</div>
 	
 	<section id="operations">
 	{ #if operations && operations.length }
-	<header class="operations__header">
-		<h1 class="operations__meta">{operations.length} Operations</h1>
-	</header>
-	<ul class="list operations__list">
-		
-		<!-- Operation Header //-->
-		<li class="operation operation__header">
-			<div class="operation__number">#</div>
-			<div class="operation__description">Time</div>
-			<div class="operation__time">Description</div>
-		</li>
-		
-		<!-- Operations //-->
-		{ #each operations as operation }
-			<li class="operation">
-				<Operation  
-					id={operation.id}
-					bind:time={operation.time}
-					bind:description={operation.description}
-					bind:elements={operation.elements} 
-					on:timeupdated={updateRouterTime}/>
-			</li>
-		{ /each }
-		
-		<!-- New Operation //-->
-		<li class="operation operations__new">
-			<details>
-			<summary class="operation__summary">
-				<input type="text" class="operation__description operations__description-new" bind:value="{newOperation.description}" >
-				<div class="operation__time time">0</div>
-				<button class="operation__action operation__action-add" on:click={addOperation}>Add</button>
-			</summary>
+		<header class="operations__header">
+			<h1 class="operations__meta">{operations.length} Operations</h1>
+		</header>
 			
-			</details>
-		</li>
-	</ul>
+		<ul class="list">
+		<!-- Operation Header //-->
+			<li class="line-item list-header list-header--operation">
+				<div class="operation__number">#</div>
+				<div class="operation__desscription">Description</div>
+				<div class="time operation__time">Time</div>
+			</li>
+	
+			<!-- Operations //-->
+			{ #each operations as operation }
+		
+			<Operation  
+				id={operation.id}
+				bind:time={operation.time}
+				bind:number={operation.number}
+				bind:description={operation.description}
+				bind:elements={operation.elements} 
+				on:timeupdated={updateRouterTime}/>
+		
+			{ /each }
+	
+			<!-- New Operation //-->
+			<li class="line-item line-item--new">
+				<input type="text" class="" bind:value="{newOperation.description}" >
+				<button class="action-item" on:click={addOperation}>+</button>
+			</li>
+		</ul>
 	{ /if }
 
 	</section>

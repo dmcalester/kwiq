@@ -1,40 +1,32 @@
 <script>
 	import { page } from '$app/stores';
-	import { goto, afterNavigate } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { operationTime, elementTime } from '../../store.js';
-	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove, orderBy } from "firebase/firestore"; 
+	import { afterNavigate } from '$app/navigation';
+	import { collection, doc, addDoc, onSnapshot, query, orderBy } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
 	
 	import  Operation  from '../../components/Operation.svelte';
 	
 	import '../../css/routers.css';
-	// import '../../css/operations.css';
-	import '../../css/elements.css';
+	
 	
 	let router = {};
 	let operations = [];
 	
-	$: routerTime = operations.reduce((sum, op) => sum + parseFloat(op.time), 0);
+	let newOperation = {}
 	
-	$: _operationTime = operationTime;
+	let setupTime = 0; /* TODO: Dynamic and at the project level */
 	
-
-	let newOperation = {
-		description: ""
-	}
-	let newElement = {}
+	// calculate router time
+	$: routerTime = (operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime);
+	
 	
 	const operationsCol = (routerId) => {
 	 return collection(db, "routers", routerId, "operations");
 	}
 	
-	/* TODO: change this to operation ref */
-	
-	
-	const routerRef = (routerId) => {
-		return doc(db, 'routers', routerId);
-	}
+	// const routerRef = (routerId) => {
+	// 	return doc(db, 'routers', routerId);
+	// }
 	
 
 	afterNavigate(async () => {
@@ -52,43 +44,11 @@
 		});
 	});
 	
-	/* Router CRUD */
-	/*
-	**	TODO
-			Return created doc
-	*/
-	
-	
-	// const updateRouter = async() => {
-	// 	const routerRef = 
-	// 	await updateDoc()
-	// }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// both the operation and router values should never be manually set
-	// always derive value from elements
-	const updateRouterTime = async() => {
-		
-		var time = operations.reduce((sum, op) => sum + parseFloat(op.time), 0);
-		router.time = time;
-		
-		// update router time
-		const res = await updateDoc(doc(db, 'routers', router.id), {
-			time: router.time
-		})	
-	}
-	
 	
 	/* OPERATION CRUD */
 	const addOperation = async() => {		
 		const opRef = await addDoc(operationsCol($page.params.routerId), {
+			number: newOperation.number,
 			description: newOperation.description,
 			createdAt: new Date(),
 			time: 0,
@@ -103,7 +63,8 @@
 
 <div id="detail">
 	<div class="detail__header">
-		<h1>{ #if router.time } {routerTime } { /if } | { $operationTime } | { $elementTime } |{router.description}</h1>
+		<h1>{ #if router.time } {routerTime.toFixed(2) } { /if } | {router.description}</h1>
+		<input type="number" bind:value="{setupTime}" />
 	</div>
 	
 	<section id="operations">
@@ -128,8 +89,7 @@
 				bind:time={operation.time}
 				bind:number={operation.number}
 				bind:description={operation.description}
-				bind:elements={operation.elements} 
-				on:timeupdated={updateRouterTime}/>
+				bind:elements={operation.elements} />
 		
 			{ /each }
 	

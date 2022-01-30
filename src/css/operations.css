@@ -3,6 +3,7 @@
 
 .operation { 
 	font-size: var(--font-02);
+	border-bottom: 1px solid #ddd;
 }
 
 .operations__header {
@@ -32,7 +33,7 @@
 }
 
 .list-header--operation > * {
-	outline: 1px solid red;
+	
 }
 
 .operation__number {

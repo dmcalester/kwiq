@@ -16,10 +16,11 @@
 	export let elements;
 	
 	
-	let newElement = {}
+	let newElement = {};
+	let pfd = 0.15;
 
 	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
-	// operationTime.set(time);
+	$: pfdTime = (time * pfd) + time;
 	
 	
 	const operationRef = (operationId) => {
@@ -38,6 +39,19 @@
 		newElement = {};
 	}
 	
+	
+	/* OPERATION CRUD */
+	// const addOperation = async() => {		
+	// 	const opRef = await addDoc(operationsCol($page.params.routerId), {
+	// 		description: newOperation.description,
+	// 		createdAt: new Date(),
+	// 		time: 0,
+	// 		order: operations.length + 1,
+	// 		elements: []
+	// 	});
+	// 	
+	// 	newOperation = {};
+	// }
 	
 	const deleteElement = async(elementIndex) => {
 		elements.splice(elementIndex, 1);	
@@ -65,7 +79,7 @@
 		<summary class="line-item">
 			<div contenteditable="true" bind:innerHTML={number} on:click={disregardAction} on:keyup={disregardSpace} class="number operation__number"></div>			
 			<div contenteditable="true" bind:innerHTML={description} on:click={disregardAction} on:keyup={disregardSpace} class="description operation__description"></div>
-			<div class="time operation__time">{time.toFixed(2)}</div>
+			<div class="time operation__time">{time.toFixed(2)} | { pfdTime.toFixed(2) }</div>
 			<button class="action-item action-item--delete" on:click={deleteOperation(id)}>×</button>
 		</summary>
 	
@@ -76,16 +90,10 @@
 				<div class="element__frequency">Frequency</div>
 				<div class="element__time">Time</div>
 			</li>
-			{ #each elements as element, i }
+			{ #each elements as element }
 				<Element
 					bind:time={element.time}
 					bind:description={element.description} />
-				
-<!-- 				<li class="line-item">
-					<div class="description" contenteditable="true" bind:innerHTML={element.description}></div>
-					<div><input type="number" min="0" step="0.1" bind:value="{element.time}" /></div>
-					<button class="action-item" on:click={() => deleteElement(i)}>×</button>
-					</li> -->
 			{ /each }
 		{ /if }
 	

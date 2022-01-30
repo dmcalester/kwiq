@@ -1,13 +1,10 @@
 <script>
 	import { page } from '$app/stores';
-	// import { createEventDispatcher } from 'svelte';
-	import { operationTime } from '../store.js';
 	import { doc, deleteDoc, updateDoc, arrayUnion } from "firebase/firestore"; 
 	import { db } from '../fb.js'
-
 	import Element from './Element.svelte';
+	
 	import '../css/operations.css';
-	import '../css/elements.css';
 	
 	export let id;
 	export let description;

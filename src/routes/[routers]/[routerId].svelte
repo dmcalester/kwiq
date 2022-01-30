@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { goto, afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { operationTime, elementTime } from '../../store.js';
 	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove, orderBy } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
 	
@@ -13,6 +14,10 @@
 	
 	let router = {};
 	let operations = [];
+	
+	$: routerTime = operations.reduce((sum, op) => sum + parseFloat(op.time), 0);
+	
+	$: _operationTime = operationTime;
 	
 
 	let newOperation = {
@@ -98,7 +103,7 @@
 
 <div id="detail">
 	<div class="detail__header">
-		<h1>{ #if router.time } {router.time.toFixed(2)} { /if } | {router.description}</h1>
+		<h1>{ #if router.time } {routerTime } { /if } | { $operationTime } | { $elementTime } |{router.description}</h1>
 	</div>
 	
 	<section id="operations">

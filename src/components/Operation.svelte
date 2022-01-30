@@ -1,10 +1,11 @@
 <script>
 	import { page } from '$app/stores';
-	import { createEventDispatcher } from 'svelte';
-	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove, orderBy } from "firebase/firestore"; 
+	// import { createEventDispatcher } from 'svelte';
+	import { operationTime } from '../store.js';
+	import { doc, deleteDoc, updateDoc, arrayUnion } from "firebase/firestore"; 
 	import { db } from '../fb.js'
 
-	// import Element from './Element.svelte';
+	import Element from './Element.svelte';
 	import '../css/operations.css';
 	import '../css/elements.css';
 	
@@ -16,6 +17,10 @@
 	
 	
 	let newElement = {}
+
+	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
+	// operationTime.set(time);
+	
 	
 	const operationRef = (operationId) => {
 		return doc(db, 'routers', $page.params.routerId, 'operations', operationId);
@@ -31,40 +36,17 @@
 			})
 		});
 		newElement = {};
-		updateOperationTime();
 	}
 	
 	
 	const deleteElement = async(elementIndex) => {
-		console.log(elements);
-		elements.splice(elementIndex, 1);
-		console.log(elements);
-		
-		
+		elements.splice(elementIndex, 1);	
 	}
 	
 	
 	const deleteOperation = async(operationId) => {
 		const opRef = await deleteDoc(operationRef(operationId));
-		updateOperationTime();
 	}
-	
-	const dispatch = createEventDispatcher();
-	const updateOperationTime = async () => {
-		time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
-		dispatch('timeupdated', {
-			time: time
-		});	
-	
-		// update operation time
-		const res = await updateDoc(doc(db, 'routers', $page.params.routerId, 'operations', id), {
-			description: description,
-			time: time,
-			elements: elements
-		});
-	}
-	
-	
 	
 	const disregardSpace = (e) => {
 		if(e.keyCode === 32) e.preventDefault();
@@ -95,11 +77,15 @@
 				<div class="element__time">Time</div>
 			</li>
 			{ #each elements as element, i }
-				<li class="line-item">
+				<Element
+					bind:time={element.time}
+					bind:description={element.description} />
+				
+<!-- 				<li class="line-item">
 					<div class="description" contenteditable="true" bind:innerHTML={element.description}></div>
-					<div><input type="number" min="0" step="0.1" bind:value="{element.time}" on:change="{updateOperationTime}"/></div>
+					<div><input type="number" min="0" step="0.1" bind:value="{element.time}" /></div>
 					<button class="action-item" on:click={() => deleteElement(i)}>×</button>
-					</li>
+					</li> -->
 			{ /each }
 		{ /if }
 	

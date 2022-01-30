@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	import { goto, afterNavigate } from '$app/navigation';
-	import { collection, doc, getDocs, addDoc, query, onSnapshot, deleteDoc, limit } from "firebase/firestore"; 
-	import { db } from '../fb.js'
+	import { goto } from '$app/navigation';
+	import { onSnapshot } from "firebase/firestore"; 
+	import { queryAllRouters } from '../api.js'
 	
 	import '../css/list.css';
 	
@@ -10,8 +10,8 @@
 	let routers = [];
 	
 	
-	const routersCol = collection(db, "routers");
-	const queryAllRouters = query(routersCol);
+	
+	
 	
 	onMount(async () => {
 		onSnapshot(queryAllRouters, (querySnapshot) => {

@@ -3,6 +3,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { collection, doc, addDoc, onSnapshot, query, orderBy } from "firebase/firestore"; 
 	import { db } from '../../fb.js'
+	import { operationsCol } from '../../api.js';
 	
 	import  Operations  from '../../components/Operations.svelte';
 	
@@ -12,30 +13,21 @@
 	let router = {};
 	let operations = [];
 	
-	let newOperation = {}
 	
-	let setupTime = 0; /* TODO: Dynamic and at the project level */
+	
+	let setupTime = 0; /* TODO: Dynamic and at the operation level */
 	
 	// calculate router time
 	$: routerTime = (operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime);
 	
 	
-	const operationsCol = (routerId) => {
-	 return collection(db, "routers", routerId, "operations");
-	}
-	
-	// const routerRef = (routerId) => {
-	// 	return doc(db, 'routers', routerId);
-	// }
-	
-
 	afterNavigate(async () => {
 		onSnapshot(doc(db, "routers", $page.params.routerId), (doc) => {
 				router = { id: doc.id, ...doc.data()};
 		});
 		
-		// Subscribes to a live collection of the operations in the sub-collection of the
-		// current router
+		// Subscribes to a live collection of the operations in the 
+		// sub-collection of the current router
 		const queryAllOperations = query(operationsCol($page.params.routerId), orderBy("order"));
 		onSnapshot(queryAllOperations, (querySnapshot) => {
 			operations = querySnapshot.docs.map(doc => {
@@ -45,19 +37,6 @@
 	});
 	
 	
-	/* OPERATION CRUD */
-	// const addOperation = async() => {		
-	// 	const opRef = await addDoc(operationsCol($page.params.routerId), {
-	// 		number: newOperation.number,
-	// 		description: newOperation.description,
-	// 		createdAt: new Date(),
-	// 		time: 0,
-	// 		order: operations.length + 1,
-	// 		elements: []
-	// 	});
-	// 	
-	// 	newOperation = {};
-	// }
 	
 </script>
 
@@ -71,4 +50,9 @@
 		<Operations 
 			bind:operations={operations} />
 	</section>
+	
+	<div style="color: #fff;">
+	<pre>{JSON.stringify(router)}</pre>
+	<pre>{JSON.stringify(operations)}</pre>
+	</div>
 </div>

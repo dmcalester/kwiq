@@ -1,16 +1,22 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
 	import { elementTime } from '../store.js';
-	import '../css/elements.css';
+	
 	
 	export let time;
 	export let description;
+	export let index;
+	
+	const dispatch = createEventDispatcher();
 	
 	const updateTime = () => {
 		elementTime.set(time);
 	}
 	
-	const deleteElement = () => {
-		console.log('delete element');
+	const deleteElement = (index) => {
+		dispatch('delete', {
+			index: index
+		});
 	}
 </script>
 
@@ -19,7 +25,7 @@
 	<div>{description}</div>
 	<div class="description" contenteditable="true" bind:innerHTML={description}></div>
 	<div><input type="number" min="0" step="0.1" bind:value={time} on:change={updateTime} /></div>
-	<button class="action-item" on:click="{deleteElement}">×</button>
+	<button class="action-item" on:click="{deleteElement(index)}">×</button>
 </li>
 
 

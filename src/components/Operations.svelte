@@ -16,7 +16,7 @@
 
 	/* OPERATION CRUD */
 	const addOperation = async () => {
-		const opRef = await addDoc(operationsCol($page.params.routerId), {
+		await addDoc(operationsCol($page.params.routerId), {
 			description: newOperation.description,
 			number: newOperation.number,
 			createdAt: new Date(),
@@ -29,8 +29,7 @@
 	};
 
 	const deleteOperation = async (operationId) => {
-		console.log(operationId);
-		const deletedDoc = await deleteDoc(operationRef($page.params.routerId, operationId.detail.id));
+		await deleteDoc(operationRef($page.params.routerId, operationId.detail.id));
 	};
 
 	const updateOperation = () => {

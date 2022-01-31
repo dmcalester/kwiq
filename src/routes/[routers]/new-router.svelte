@@ -1,18 +1,6 @@
 <script>
-	import { goto, afterNavigate } from '$app/navigation';
-	import {
-		collection,
-		doc,
-		addDoc,
-		getDocs,
-		getDoc,
-		deleteDoc,
-		onSnapshot,
-		query,
-		updateDoc,
-		arrayUnion,
-		arrayRemove
-	} from 'firebase/firestore';
+	import { goto } from '$app/navigation';
+	import { collection } from 'firebase/firestore';
 	import { db } from '../../fb.js';
 
 	/*
@@ -44,10 +32,10 @@
 
 <section>
 	<div>
-		<label>Description</label>
-		<input type="text" bind:value={newRouter.description} />
+		<label for="router-description">Description</label>
+		<input name="router-description" type="text" bind:value={newRouter.description} />
 	</div>
-	<label>Batch</label>
-	<input type="number" bind:value={newRouter.batch} />
+	<label for="router-batch">Batch</label>
+	<input name="router-batch" type="number" bind:value={newRouter.batch} />
 	<button style="margin-left: auto;" on:click={addRouter}>Add</button>
 </section>

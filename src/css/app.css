@@ -12,7 +12,7 @@
 	--space-11: 5rem;
 	--space-12: 6rem;
 	--space-13: 10rem;
-	
+
 	--font-01: 0.75rem;
 	--font-02: 0.875rem;
 	--font-03: 1rem;
@@ -26,29 +26,31 @@
 	--font-11: 3rem;
 	--font-12: 3.375rem;
 	--font-13: 3.75rem;
-	
+
 	--gap-to-account-for-button-in-header: var(--space-08);
 	--gap-to-account-for-arrow-in-header: var(--space-06);
-	
+
 	--header-number-width: 5%;
 	--header-description-width: auto;
 	--header-time-width: 10%;
-	
 }
-
-
 
 body {
 	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #2C394B;
-	background-color: color(display-p3 0.173 0.224 0.294)
-	
+	background-color: #2c394b;
+	background-color: color(display-p3 0.173 0.224 0.294);
+
 	color: #fff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	margin: 0;
 	padding: 0;
 }
@@ -57,15 +59,12 @@ ul {
 	list-style: none;
 }
 
-
 #app {
 	display: grid;
 	grid-template-rows: var(--space-10) auto;
 	grid-template-columns: 20% auto;
 	height: 100vh;
 	gap: var(--space-02);
-	
-	
 }
 
 #header {
@@ -73,9 +72,9 @@ ul {
 	grid-column-end: 3;
 	grid-row: 1;
 	padding: var(--space-02);
-	
-	background-color: #2C394B;
-	background-color:color(display-p3 0.031 0.125 0.196);
+
+	background-color: #2c394b;
+	background-color: color(display-p3 0.031 0.125 0.196);
 	color: #999;
 }
 
@@ -92,15 +91,12 @@ ul {
 	color: #fff;
 }
 
-
-
 #detail {
 	background-color: transparent;
 	grid-row: 2;
 	overflow-y: scroll;
 	padding-right: var(--space-02);
 }
-
 
 #routers h2 {
 	margin: 0;
@@ -112,7 +108,6 @@ ul {
 	padding: var(--space-02);
 	margin: var(--space-05);
 }
-
 
 .list {
 	padding: 0;
@@ -128,7 +123,6 @@ ul {
 }
 
 .description {
-	
 }
 
 .line-item:nth-child(odd) {
@@ -140,7 +134,7 @@ ul {
 }
 
 .action-item {
-/* 	margin-left: auto; */
+	/* 	margin-left: auto; */
 }
 
 .list-header {
@@ -148,7 +142,7 @@ ul {
 	font-weight: 550;
 	background-color: #ddd !important;
 	outline: 1px solid #aaa;
-	
+
 	padding-left: var(--space-06);
 	padding-right: var(--space-08);
 }
@@ -156,7 +150,7 @@ ul {
 .new-item {
 	background-color: #ddd;
 	padding: var(--space-02);
-	margin: var(--space-02);	
+	margin: var(--space-02);
 }
 
 .time {
@@ -165,7 +159,7 @@ ul {
 	width: var(--space-10);
 }
 
-
-detail, summary {
+detail,
+summary {
 	outline: none !important;
 }

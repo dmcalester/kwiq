@@ -1,5 +1,5 @@
 <script>
-	import Parent from '../test/Parent.svelte';	
+	import Parent from '../test/Parent.svelte';
 	import '../css/test.css';
 </script>
 

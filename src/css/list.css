@@ -1,13 +1,12 @@
 /* list.css */
 
-
 .list--header {
 	padding: 0;
 	margin: 0;
-	
+
 	display: flex;
 	justify-content: space-between;
-	
+
 	color: #fff;
 }
 
@@ -17,7 +16,6 @@
 	font-weight: 300;
 	font-size: var(--font-04);
 }
-
 
 .list__routers {
 	padding: 0;
@@ -31,11 +29,9 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	
 }
 
-
 .list-router {
-	content: "";
-	border-bottom: 1px solid rgba(255,255,255,.25);
+	content: '';
+	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }

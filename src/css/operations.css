@@ -1,7 +1,6 @@
 /* operations.css */
 
-
-.operation { 
+.operation {
 	font-size: var(--font-02);
 	border-bottom: 1px solid #ddd;
 }
@@ -10,9 +9,8 @@
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: var(--space-05);
-	color: rgba(255,255,255,0.5)
+	color: rgba(255, 255, 255, 0.5);
 }
-
 
 .operations__meta {
 	font-weight: 300;
@@ -26,14 +24,12 @@
 	margin-right: 0;
 }
 
-
 .list-header--operation {
 	padding-left: var(--gap-to-account-for-arrow-in-header);
 	padding-right: var(--gap-to-account-for-button-in-header);
 }
 
 .list-header--operation > * {
-	
 }
 
 .operation__number {

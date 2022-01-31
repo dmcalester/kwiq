@@ -1,43 +1,53 @@
 <script>
 	import { goto, afterNavigate } from '$app/navigation';
-	import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, onSnapshot, query, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"; 
-	import { db } from '../../fb.js'
+	import {
+		collection,
+		doc,
+		addDoc,
+		getDocs,
+		getDoc,
+		deleteDoc,
+		onSnapshot,
+		query,
+		updateDoc,
+		arrayUnion,
+		arrayRemove
+	} from 'firebase/firestore';
+	import { db } from '../../fb.js';
 
-/* 
-** TODO
-** created by should be set by a user reference ID 
-*/
-let newRouter = {
-	createdBy: "Peter Parker",
-	batch: 1
-};
+	/*
+	 ** TODO
+	 ** created by should be set by a user reference ID
+	 */
+	let newRouter = {
+		createdBy: 'Peter Parker',
+		batch: 1
+	};
 
-
-/* Router CRUD */
-/*
+	/* Router CRUD */
+	/*
 **	TODO
 		Return created doc
 */
-const addRouter = async() => {
-	const docRef = await addDoc(collection(db, "routers"), {
-		description: newRouter.description,
-		batch: newRouter.batch,
-		createdAt: new Date(),
-		createdBy: newRouter.createdBy,
-		time: 0 
-	});
-	console.log(docRef.id);
-	goto(`/routers/${docRef.id}`);
-}
-
+	const addRouter = async () => {
+		const docRef = await addDoc(collection(db, 'routers'), {
+			description: newRouter.description,
+			batch: newRouter.batch,
+			createdAt: new Date(),
+			createdBy: newRouter.createdBy,
+			time: 0
+		});
+		console.log(docRef.id);
+		goto(`/routers/${docRef.id}`);
+	};
 </script>
 
 <section>
 	<div>
 		<label>Description</label>
-		<input type="text" bind:value="{newRouter.description}" />
+		<input type="text" bind:value={newRouter.description} />
 	</div>
 	<label>Batch</label>
-	<input type="number" bind:value="{newRouter.batch}" />
+	<input type="number" bind:value={newRouter.batch} />
 	<button style="margin-left: auto;" on:click={addRouter}>Add</button>
 </section>

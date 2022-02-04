@@ -3,7 +3,8 @@
 	import { afterNavigate } from '$app/navigation';
 	import { doc, onSnapshot, query, orderBy, updateDoc } from 'firebase/firestore';
 	import { db } from '../../fb.js';
-	import { operationsCol } from '../../api.js';
+	import { operationsCol, routerRef } from '../../api.js';
+	import { elementTime } from '../../store.js';
 
 	import Operations from '../../components/Operations.svelte';
 
@@ -14,8 +15,18 @@
 
 	let setupTime = 0; /* TODO: Dynamic and at the operation level */
 
-	// calculate router time
-	$: routerTime = operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
+	/* NOTE: 
+		this may be an anti-pattern 
+	*/
+	elementTime.subscribe(() => {
+		// Don’t update the time if there are no operations. This may
+		// be a hack, but prevents time getting reset to 0 on initial
+		// load since operations are loaded after router
+		if (operations.length) {
+			var time = operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
+			updateDoc(routerRef($page.params.routerId), { time: time });
+		}
+	});
 
 	afterNavigate(async () => {
 		onSnapshot(doc(db, 'routers', $page.params.routerId), (doc) => {
@@ -36,7 +47,7 @@
 <div id="detail">
 	<div class="detail__header">
 		<h1>
-			{#if router.time} {routerTime.toFixed(2)} {/if} | {router.description}
+			{#if router.time} {router.time.toFixed(2)} {/if} | {router.description}
 		</h1>
 		<input type="number" bind:value={setupTime} />
 	</div>

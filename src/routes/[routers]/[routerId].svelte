@@ -15,7 +15,8 @@
 	let setupTime = 0; /* TODO: Dynamic and at the operation level */
 
 	/* NOTE: 
-		this may be an anti-pattern 
+		this may be an anti-pattern essentially though the routertime
+		and update field are only affected when an element time is updated
 	*/
 	elementTime.subscribe(() => {
 		// Don’t update the time if there are no operations. This may

@@ -163,3 +163,15 @@ detail,
 summary {
 	outline: none !important;
 }
+
+.debug {
+	color: #fff;
+	display: flex;
+	border: 1px solid #fff;
+	gap: 1rem;
+}
+
+.debug > * {
+	border: 1px solid white;
+	padding: 1rem;
+}

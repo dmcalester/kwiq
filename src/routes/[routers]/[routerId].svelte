@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
-	import { doc, onSnapshot, query, orderBy } from 'firebase/firestore';
+	import { doc, onSnapshot, query, orderBy, updateDoc } from 'firebase/firestore';
 	import { db } from '../../fb.js';
 	import { operationsCol } from '../../api.js';
 
@@ -45,8 +45,8 @@
 		<Operations bind:operations />
 	</section>
 
-	<div style="color: #fff;">
-		<pre>{JSON.stringify(router)}</pre>
-		<pre>{JSON.stringify(operations)}</pre>
+	<div class="debug">
+		<pre>{JSON.stringify(router, undefined, 2)}</pre>
+		<pre>{JSON.stringify(operations, undefined, 2)}</pre>
 	</div>
 </div>

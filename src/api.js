@@ -11,5 +11,8 @@ export const operationsCol = (routerId) => {
 };
 
 /* Routers */
+// export const routerRef = (routerId) => {
+// 	return doc(db, 'routers', routerId);
+// };
 export const routersCol = collection(db, 'routers');
 export const queryAllRouters = query(routersCol, orderBy('description'));

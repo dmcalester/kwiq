@@ -1,6 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import accordion from '../utils/accordion.js';
+	import accordion from '$lib/accordion.js';
+	import { disregardSpace, disregardAction } from '$lib/utilities.js';
 	import Elements from './Elements.svelte';
 
 	export let id;
@@ -15,21 +16,6 @@
 
 	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
 	$: pfdTime = time * pfd + time;
-
-	/* 
-		Utility classes to prevent the default browser behavior of the
-		native HTML disclosure element. Essentially ignore the space
-		key to prevent toggling and also the click event when clicking
-		in to the operation’s number or description
-		
-	*/
-	const disregardSpace = (e) => {
-		if (e.keyCode === 32) e.preventDefault();
-	};
-
-	const disregardAction = (e) => {
-		e.preventDefault();
-	};
 
 	function _deleteOperation(id) {
 		dispatch('delete', {

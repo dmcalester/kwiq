@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import accordion from '../utils/accordion.js';
 	import Elements from './Elements.svelte';
 
 	export let id;
@@ -38,7 +39,7 @@
 </script>
 
 <li class="operation">
-	<details class="operation__detail">
+	<details class="operation__detail" use:accordion>
 		<summary class="line-item">
 			<div
 				contenteditable="true"

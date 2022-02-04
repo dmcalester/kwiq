@@ -5,22 +5,3 @@
 	background-color: #999;
 	border-top: 1px solid #333;
 }
-/*
-.element {
-	background-color: #fff;
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	padding: 0.15rem 0.5rem;
-	
-}
-
-.element:nth-child(even) {
-	background-color: #eee;
-}
-
-.element__action {
-	 order: 4;
-	 margin-left: auto;
-}
-*/

@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { dataLibrary } from '../data-library.js';
 	import { elementTime } from '../store.js';
 
 	export let time;
@@ -20,8 +21,17 @@
 </script>
 
 <li class="line-item">
-	<div>{description}</div>
-	<div class="description" contenteditable="true" bind:innerHTML={description} />
-	<div><input type="number" min="0" step="0.1" bind:value={time} on:change={updateTime} /></div>
-	<button class="action-item" on:click={deleteElement(index)}>×</button>
+	<div class="line-item row">
+		<div class="description" contenteditable="true" bind:innerHTML={description} />
+		<div><input type="number" min="0" step="0.1" bind:value={time} on:change={updateTime} /></div>
+		<div class="line-item row">
+			<select>
+				{#each dataLibrary as menu}
+					<option value={menu.value}>{menu.label}</option>
+				{/each}
+				<option value="directInput">Direct Input</option>
+			</select>
+		</div>
+		<button class="action-item" on:click={deleteElement(index)}>×</button>
+	</div>
 </li>

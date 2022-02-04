@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { dataLibrary } from '../data-library.js';
+	import { dataLibrary } from '$lib/data-library.js';
 	import { elementTime } from '../store.js';
 
 	export let time;

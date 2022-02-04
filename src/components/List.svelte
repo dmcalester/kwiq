@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { onSnapshot, orderBy } from 'firebase/firestore';
-	import { queryAllRouters } from '../api.js';
+	import { onSnapshot } from 'firebase/firestore';
+	import { queryAllRouters } from '$lib/fb.js';
 
 	import '../css/list.css';
 

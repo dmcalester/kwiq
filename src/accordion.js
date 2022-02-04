@@ -1,3 +1,6 @@
+/*
+ Accordion transition
+*/
 export default function (node) {
 	const setHeight = (detail, open = false) => {
 		detail.open = open;

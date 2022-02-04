@@ -2,8 +2,7 @@
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import { doc, onSnapshot, query, orderBy, updateDoc } from 'firebase/firestore';
-	import { db } from '../../fb.js';
-	import { operationsCol, routerRef } from '../../api.js';
+	import { db, operationsCol, routerRef } from '$lib/fb.js';
 	import { elementTime } from '../../store.js';
 
 	import Operations from '../../components/Operations.svelte';

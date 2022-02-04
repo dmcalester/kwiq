@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { updateDoc, arrayUnion } from 'firebase/firestore';
-	import { operationRef } from '../api.js';
+	import { operationRef } from '$lib/fb.js';
 	import Element from './Element.svelte';
 
 	import '../css/elements.css';

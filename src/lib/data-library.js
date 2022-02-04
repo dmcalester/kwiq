@@ -1,3 +1,6 @@
+/* 
+	TODO: Move this to its own dynamic collection
+*/
 export const dataLibrary = [
 	{
 		label: 'Grasp',

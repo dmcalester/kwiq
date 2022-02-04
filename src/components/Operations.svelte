@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { addDoc, deleteDoc } from 'firebase/firestore';
-	import { operationsCol, operationRef } from '../api.js';
+	import { operationsCol, operationRef } from '$lib/fb.js';
 
 	import '../css/operations.css';
 	import Operation from './Operation.svelte';

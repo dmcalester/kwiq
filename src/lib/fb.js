@@ -1,5 +1,22 @@
-import { collection, doc, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
-import { db } from './fb.js';
+import { variables } from './variables';
+import { initializeApp } from 'firebase/app';
+import {
+	getFirestore,
+	query,
+	collection,
+	doc,
+	addDoc,
+	onSnapshot,
+	orderBy
+} from 'firebase/firestore';
+
+const firebaseApp = initializeApp({
+	apiKey: variables.apiKey,
+	authDomain: variables.authDomain,
+	projectId: variables.projectId
+});
+
+export const db = getFirestore();
 
 /* Operations */
 export const operationRef = (routerId, operationId) => {

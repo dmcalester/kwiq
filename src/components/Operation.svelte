@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import accordion from '$lib/accordion.js';
+	import accordion from '../accordion.js';
 	import { disregardSpace, disregardAction } from '$lib/utilities.js';
 	import Elements from './Elements.svelte';
 

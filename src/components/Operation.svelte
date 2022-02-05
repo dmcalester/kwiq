@@ -1,7 +1,9 @@
 <script>
+	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
-	import accordion from '../accordion.js';
 	import { disregardSpace, disregardAction } from '$lib/utilities.js';
+	import { updateDoc } from 'firebase/firestore';
+	import { operationRef } from '$lib/fb.js';
 	import Elements from './Elements.svelte';
 
 	export let id;
@@ -9,6 +11,15 @@
 	export let number;
 	export let time;
 	export let elements;
+
+	const updateOperation = () => {
+		updateDoc(operationRef($page.params.routerId, id), {
+			description: description,
+			number: number,
+			time: time,
+			elements: elements
+		});
+	};
 
 	let pfd = 0.15;
 
@@ -25,13 +36,14 @@
 </script>
 
 <li class="operation">
-	<details class="operation__detail" use:accordion>
+	<details class="operation__detail">
 		<summary class="line-item">
 			<div
 				contenteditable="true"
 				bind:innerHTML={number}
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
+				on:blur={updateOperation}
 				class="number operation__number"
 			/>
 			<div
@@ -39,8 +51,10 @@
 				bind:innerHTML={description}
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
+				on:blur={updateOperation}
 				class="description operation__description"
 			/>
+
 			<div class="time operation__time">{time.toFixed(2)} | {pfdTime.toFixed(2)}</div>
 			<button class="action-item action-item--delete" on:click={_deleteOperation(id)}>×</button>
 		</summary>

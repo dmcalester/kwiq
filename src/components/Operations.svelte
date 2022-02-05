@@ -2,11 +2,12 @@
 	import { page } from '$app/stores';
 	import { addDoc, deleteDoc } from 'firebase/firestore';
 	import { operationsCol, operationRef } from '$lib/fb.js';
+	import { _operations } from '../store.js';
 
 	import '../css/operations.css';
 	import Operation from './Operation.svelte';
 
-	export let operations;
+	// export let operations;
 
 	/* TODO add the ability to create an operation prefix */
 	let newOperation = {
@@ -37,9 +38,9 @@
 	};
 </script>
 
-{#if operations && operations.length}
+{#if $_operations && $_operations.length}
 	<header class="operations__header">
-		<h1 class="operations__meta">{operations.length} Operations</h1>
+		<h1 class="operations__meta">{$_operations.length} Operations</h1>
 	</header>
 
 	<ul class="list">
@@ -51,7 +52,7 @@
 		</li>
 
 		<!-- Operations //-->
-		{#each operations as operation}
+		{#each $_operations as operation}
 			<Operation
 				id={operation.id}
 				bind:time={operation.time}

@@ -23,9 +23,16 @@
 		newElement = {};
 	};
 
-	const deleteElement = async (e) => {
-		elements = elements.filter((el, index) => index !== e.detail.index);
+	const updateElement = async (e) => {
+		console.log('update element');
 		await updateDoc(operationRef($page.params.routerId, operationId), {
+			elements: elements
+		});
+	};
+
+	const deleteElement = async (e) => {
+		elements = elements.filter((el, index) => index !== e.detail.id);
+		updateDoc(operationRef($page.params.routerId, operationId), {
 			elements: elements
 		});
 	};
@@ -40,10 +47,11 @@
 		</li>
 		{#each elements as element, i}
 			<Element
-				index={i}
+				id={i}
 				bind:time={element.time}
 				bind:description={element.description}
 				on:delete={deleteElement}
+				on:update={updateElement}
 			/>
 		{/each}
 	{/if}

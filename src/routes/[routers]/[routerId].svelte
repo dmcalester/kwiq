@@ -3,33 +3,36 @@
 	import { afterNavigate } from '$app/navigation';
 	import { doc, onSnapshot, query, orderBy, updateDoc } from 'firebase/firestore';
 	import { db, operationsCol, routerRef } from '$lib/fb.js';
-	import { elementTime, _router, _operations } from '../../store.js';
-
+	import { _router, _operations } from '../../store.js';
 	import Operations from '../../components/Operations.svelte';
 
 	import '../../css/routers.css';
 
+	let timer;
 	let setupTime = 0; /* TODO: Dynamic and at the operation level */
-	let routerWriteTimer;
 
-	/* NOTE: 
-		this may be an anti-pattern essentially though the router time
-		and update field are only affected when an element time is updated
-	*/
-	elementTime.subscribe(() => {
-		// Don’t update the time if there are no operations. This may
-		// be a hack, but prevents time getting reset to 0 on initial
-		// load since operations are loaded after router
-		if ($_operations.length) {
-			$_router.time = $_operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
-			updateDoc(routerRef($page.params.routerId), { time: $_router.time, modifiedAt: new Date() });
-		}
+	_operations.subscribe(() => {
+		// debounce router time change to account for loading of elements
+		// and off flash of time update.
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			var routerTime = $_operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
+			if (routerTime !== $_router.time) {
+				console.log(routerTime);
+				$_router.time = routerTime;
+				updateDoc(routerRef($page.params.routerId), {
+					time: $_router.time,
+					modifiedAt: new Date()
+				});
+			}
+		}, 50);
 	});
 
 	const updateRouter = () => {
 		updateDoc(routerRef($page.params.routerId), { modifiedAt: new Date(), ...$_router });
 	};
 
+	/* Load a Router and its operations */
 	afterNavigate(async () => {
 		onSnapshot(doc(db, 'routers', $page.params.routerId), (doc) => {
 			var router = { id: doc.id, ...doc.data() };

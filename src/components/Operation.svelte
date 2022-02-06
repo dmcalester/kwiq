@@ -1,9 +1,10 @@
 <script>
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
-	import { disregardSpace, disregardAction } from '$lib/utilities.js';
 	import { updateDoc } from 'firebase/firestore';
 	import { operationRef } from '$lib/fb.js';
+	import { disregardSpace, disregardAction } from '$lib/utilities.js';
+	import debounce from '../debounce.js';
 	import Elements from './Elements.svelte';
 
 	export let id;
@@ -12,27 +13,21 @@
 	export let time;
 	export let elements;
 
-	const updateOperation = () => {
-		updateDoc(operationRef($page.params.routerId, id), {
+	const dispatch = createEventDispatcher();
+
+	let pfd = 0.15;
+
+	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
+	$: pfdTime = time * pfd + time;
+
+	const updateOperation = async () => {
+		await updateDoc(operationRef($page.params.routerId, id), {
 			description: description,
 			number: number,
 			time: time,
 			elements: elements
 		});
 	};
-
-	let pfd = 0.15;
-
-	const dispatch = createEventDispatcher();
-
-	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
-	$: pfdTime = time * pfd + time;
-
-	function _deleteOperation(id) {
-		dispatch('delete', {
-			id: id
-		});
-	}
 </script>
 
 <li class="operation">
@@ -43,7 +38,7 @@
 				bind:innerHTML={number}
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
-				on:blur={updateOperation}
+				use:debounce={{ number, func: updateOperation, duration: 500 }}
 				class="number operation__number"
 			/>
 			<div
@@ -51,12 +46,14 @@
 				bind:innerHTML={description}
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
-				on:blur={updateOperation}
+				use:debounce={{ description, func: updateOperation, duration: 500 }}
 				class="description operation__description"
 			/>
 
 			<div class="time operation__time">{time.toFixed(2)} | {pfdTime.toFixed(2)}</div>
-			<button class="action-item action-item--delete" on:click={_deleteOperation(id)}>×</button>
+			<button class="action-item action-item--delete" on:click={dispatch('delete', { id: id })}
+				>×</button
+			>
 		</summary>
 
 		<Elements operationId={id} bind:elements />

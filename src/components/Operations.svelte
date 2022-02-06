@@ -25,32 +25,26 @@
 			order: operations.length + 1,
 			elements: []
 		});
-
 		newOperation = {};
 	};
 
-	const deleteOperation = async (operationId) => {
-		await deleteDoc(operationRef($page.params.routerId, operationId.detail.id));
-	};
-
-	const updateOperation = () => {
-		console.log('save operation');
+	const deleteOperation = async (message) => {
+		await deleteDoc(operationRef($page.params.routerId, message.detail.id));
 	};
 </script>
 
-{#if $_operations && $_operations.length}
-	<header class="operations__header">
-		<h1 class="operations__meta">{$_operations.length} Operations</h1>
-	</header>
+<header class="operations__header">
+	<h1 class="operations__meta">{$_operations.length} Operations</h1>
+</header>
 
-	<ul class="list">
-		<!-- Operation Header //-->
-		<li class="line-item list-header list-header--operation">
-			<div class="operation__number">#</div>
-			<div class="operation__desscription">Description</div>
-			<div class="time operation__time">Time</div>
-		</li>
-
+<ol class="list">
+	<!-- Operation Header //-->
+	<li class="line-item list-header list-header--operation">
+		<div class="operation__number">#</div>
+		<div class="operation__desscription">Description</div>
+		<div class="time operation__time">Time</div>
+	</li>
+	{#if $_operations && $_operations.length}
 		<!-- Operations //-->
 		{#each $_operations as operation}
 			<Operation
@@ -62,12 +56,11 @@
 				on:delete={deleteOperation}
 			/>
 		{/each}
-
-		<!-- New Operation //-->
-		<li class="line-item line-item--new">
-			<input type="text" class="" bind:value={newOperation.number} />
-			<input type="text" class="" bind:value={newOperation.description} />
-			<button class="action-item" on:click={addOperation}>+</button>
-		</li>
-	</ul>
-{/if}
+	{/if}
+	<!-- New Operation //-->
+	<li class="line-item line-item--new">
+		<input type="text" class="" bind:value={newOperation.number} />
+		<input type="text" class="" bind:value={newOperation.description} />
+		<button class="action-item" on:click={addOperation}>+</button>
+	</li>
+</ol>

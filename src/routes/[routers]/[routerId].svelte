@@ -64,8 +64,10 @@
 		<Operations />
 	</section>
 
+	<!--
 	<div class="debug">
 		<pre>{JSON.stringify($_router, undefined, 2)}</pre>
 		<pre>{JSON.stringify($_operations, undefined, 2)}</pre>
 	</div>
+	//-->
 </div>

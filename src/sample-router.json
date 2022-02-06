@@ -58,6 +58,26 @@
 					"description": "COPIED TO. This element was copied to another operation.",
 					"createdBy": "Trevor McAlester",
 					"createdAt": "2015-07-23T18:52:07.414Z",
+					"time": 50,
+					"motion": {
+						"type": "Get & Place",
+						"option": "Easy",
+						"modifier": "Approximate",
+						"code": "A3"
+					},
+					"frequency": [1, 1],
+					"distance": 24,
+					"weight": 0,
+					"valueAdd": "Non-Value Add",
+					"setup": false
+				},
+				{
+					"number": 3,
+					"id": "EL-45c160-cd4ea7-10d057-3ff66b",
+					"massUpdateID": "MU-44b61d-12bf8e-ac1a4b-c373ba",
+					"description": "COPIED TO. This element was copied to another operation.",
+					"createdBy": "Trevor McAlester",
+					"createdAt": "2015-07-23T18:52:07.414Z",
 					"distance": 24,
 					"typeOption": 0,
 					"typeOptionModifier": 0,
@@ -120,10 +140,7 @@
 			"order": 1,
 			"newCustomField": "",
 			"number": "60",
-			"customFields": [
-				"KHOU MOUA",
-				"3400"
-			],
+			"customFields": ["KHOU MOUA", "3400"],
 			"personalFatigueAndDelay": 15,
 			"massUpdateId": "MU-463079-348710-7235e5-239e85",
 			"setupTime": null,

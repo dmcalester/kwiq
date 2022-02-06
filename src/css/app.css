@@ -154,7 +154,7 @@ ul {
 	margin: var(--space-02);
 }
 
-.time {
+time {
 	font-variant-numeric: tabular-nums;
 	text-align: right;
 	width: var(--space-10);

@@ -23,8 +23,7 @@
 		newElement = {};
 	};
 
-	const updateElement = async (e) => {
-		console.log('update element');
+	const updateElement = async () => {
 		await updateDoc(operationRef($page.params.routerId, operationId), {
 			elements: elements
 		});
@@ -45,11 +44,14 @@
 			<div class="element__frequency">Frequency</div>
 			<div class="element__time">Time</div>
 		</li>
+		<!-- TODO replace with elements as element(id) //-->
 		{#each elements as element, i}
 			<Element
 				id={i}
 				bind:time={element.time}
 				bind:description={element.description}
+				bind:distance={element.distance}
+				bind:motion={element.motion}
 				on:delete={deleteElement}
 				on:update={updateElement}
 			/>

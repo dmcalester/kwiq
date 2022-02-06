@@ -50,7 +50,9 @@
 				class="description operation__description"
 			/>
 
-			<div class="time operation__time">{time.toFixed(2)} | {pfdTime.toFixed(2)}</div>
+			<time class="operation__time"
+				>{time.toFixed(2).padEnd(2, 0)} | {pfdTime.toFixed(2).padEnd(2, 0)}</time
+			>
 			<button class="action-item action-item--delete" on:click={dispatch('delete', { id: id })}
 				>×</button
 			>

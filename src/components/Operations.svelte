@@ -15,7 +15,12 @@
 		description: ''
 	};
 
-	/* OPERATION CRUD */
+	/* 
+		OPERATION CruD
+		Create and Delete operations exist here, update is
+		in the operation itself to simplify passing data
+		back up via an event dispatched
+	*/
 	const addOperation = async () => {
 		await addDoc(operationsCol($page.params.routerId), {
 			description: newOperation.description,

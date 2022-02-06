@@ -5,3 +5,19 @@
 	background-color: #999;
 	border-top: 1px solid #333;
 }
+
+.line-item {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.line-item .row {
+	width: 100%;
+}
+
+.element__time {
+	margin-left: auto;
+	margin-right: 0;
+	width: auto;
+}

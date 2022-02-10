@@ -17,10 +17,13 @@
 
 	let pfd = 0.15;
 
+	/* TODO: Add memory for open/closed on details */
+
 	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
 	$: pfdTime = time * pfd + time;
 
 	const updateOperation = async () => {
+		console.log('update operations');
 		await updateDoc(operationRef($page.params.routerId, id), {
 			description: description,
 			number: number,

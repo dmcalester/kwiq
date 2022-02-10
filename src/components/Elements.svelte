@@ -24,6 +24,7 @@
 	};
 
 	const updateElement = async () => {
+		console.log('ELEMENTS update elements', $page.params.routerId);
 		await updateDoc(operationRef($page.params.routerId, operationId), {
 			elements: elements
 		});
@@ -50,8 +51,8 @@
 				id={i}
 				bind:time={element.time}
 				bind:description={element.description}
-				bind:distance={element.distance}
 				bind:motion={element.motion}
+				bind:frequency={element.frequency}
 				on:delete={deleteElement}
 				on:update={updateElement}
 			/>

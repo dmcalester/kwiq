@@ -18,7 +18,6 @@
 		timer = setTimeout(() => {
 			var routerTime = $_operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
 			if (routerTime !== $_router.time) {
-				console.log(routerTime);
 				$_router.time = routerTime;
 				updateDoc(routerRef($page.params.routerId), {
 					time: $_router.time,

@@ -55,6 +55,7 @@
 			<Operation
 				id={operation.id}
 				bind:time={operation.time}
+				bind:pfdTime={operation.pfdTime}
 				bind:number={operation.number}
 				bind:description={operation.description}
 				bind:elements={operation.elements}

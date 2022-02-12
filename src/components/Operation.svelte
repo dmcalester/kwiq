@@ -11,12 +11,11 @@
 	export let id;
 	export let description;
 	export let number;
-	export let time;
+	export let time = 0;
+	export let pfd = 1;
 	export let elements;
 
 	const dispatch = createEventDispatcher();
-
-	let pfd = 0.15;
 
 	/* TODO: Add memory for open/closed on details */
 
@@ -29,6 +28,7 @@
 			description: description,
 			number: number,
 			time: time,
+			pfdTime: pfdTime,
 			elements: elements
 		});
 	};
@@ -53,6 +53,11 @@
 				use:debounce={{ description, func: updateOperation, duration: 500 }}
 				class="description operation__description"
 			/>
+
+			<!-- 			<label>
+				PF&D
+				<input type="number" min="1" bind:value={pfd} />
+			</label> -->
 
 			<time class="operation__time"
 				>{time.toFixed(2).padEnd(2, 0)} | {pfdTime.toFixed(2).padEnd(2, 0)}</time

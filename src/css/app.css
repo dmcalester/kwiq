@@ -33,6 +33,9 @@
 	--header-number-width: 5%;
 	--header-description-width: auto;
 	--header-time-width: 10%;
+
+	--text-color: #fff;
+	--text-color--secondary: rgba(255, 255, 255, 0.5);
 }
 
 body {

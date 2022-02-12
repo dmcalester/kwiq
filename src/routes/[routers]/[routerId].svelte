@@ -18,10 +18,14 @@
 		clearTimeout(timer);
 		timer = setTimeout(() => {
 			var routerTime = $_operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
+			var routerPfdTime =
+				$_operations.reduce((sum, op) => sum + parseFloat(op.pfdTime), 0) + setupTime;
 			if (routerTime !== $_router.time) {
 				$_router.time = routerTime;
+				$_router.pfdTime = routerPfdTime;
 				updateDoc(routerRef($page.params.routerId), {
 					time: $_router.time,
+					pfdTime: $_router.pfdTime,
 					modifiedAt: new Date()
 				});
 			}
@@ -32,6 +36,7 @@
 		updateDoc(routerRef($page.params.routerId), { modifiedAt: new Date(), ...$_router });
 	};
 
+	// reset stores to avoid duplicate DB writes
 	beforeNavigate(() => {
 		$_operations = [];
 		$_router = {};
@@ -58,14 +63,14 @@
 
 <div id="detail">
 	<div class="detail__header">
-		<h1>
-			{#if $_router.time} {$_router.time.toFixed(2)} {/if} |
-			<div contenteditable="true" bind:innerHTML={$_router.description} on:blur={updateRouter} />
-		</h1>
-		<input type="number" bind:value={setupTime} />
+		<h1 contenteditable="true" bind:innerHTML={$_router.description} on:blur={updateRouter} />
+		<time
+			>{#if $_router.time} {$_router.time.toFixed(2)} | {$_router.pfdTime.toFixed(2)} {/if}</time
+		>
 	</div>
 
 	<section id="operations">
+		<pre style="color: #fff;">{JSON.stringify($_router, undefined, 2)}</pre>
 		<Operations />
 	</section>
 

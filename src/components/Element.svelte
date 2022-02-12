@@ -36,10 +36,6 @@
 		updateElement();
 	};
 
-	onMount(async () => {
-		console.log('time', motion.type);
-	});
-
 	/*
 		Gets the motion code and time ranges from the selected option
 	*/
@@ -110,7 +106,7 @@
 
 		<!-- If direct input //-->
 		{#if motion.type === 'Direct Input'}
-			<input type="number" min="1" bind:value={timeRange[0]} on:change={updateDirectTime} />
+			<input type="number" min="1" bind:value={directInput} on:change={updateDirectTime} />
 			<!-- If not direct input //-->
 		{:else}
 			<select bind:value={motion.option} on:change={updateOption}>

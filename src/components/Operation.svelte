@@ -5,6 +5,7 @@
 	import { operationRef } from '$lib/fb.js';
 	import { disregardSpace, disregardAction } from '$lib/utilities.js';
 	import debounce from '../debounce.js';
+	import { _elements } from '../store.js';
 	import Elements from './Elements.svelte';
 
 	export let id;

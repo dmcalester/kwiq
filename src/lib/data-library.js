@@ -41,5 +41,10 @@ export const dataLibrary = [
 			{ label: 'Read', code: 'D2', values: [6] },
 			{ label: 'Write', code: 'D3', values: [115] }
 		]
+	},
+	{
+		label: 'Direct Input',
+		value: 'directinput',
+		options: [{ label: 'Direct Input', code: 'DI', values: [0] }]
 	}
 ];

@@ -35,6 +35,15 @@ export const db = getFirestore();
 //});
 
 /* Operations */
+export const elementRef = (routerId, operationId, elementId) => {
+	return doc(db, 'routers', routerId, 'operations', operationId, 'elements', elementId);
+};
+
+export const elementsCol = (routerId, operationId) => {
+	return collection(db, 'routers', routerId, 'operations', operationId);
+};
+
+/* Operations */
 export const operationRef = (routerId, operationId) => {
 	return doc(db, 'routers', routerId, 'operations', operationId);
 };

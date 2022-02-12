@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { collection } from 'firebase/firestore';
-	import { db } from '../../fb.js';
+	import { collection, addDoc } from 'firebase/firestore';
+	import { db } from '$lib/fb.js';
 
 	/*
 	 ** TODO

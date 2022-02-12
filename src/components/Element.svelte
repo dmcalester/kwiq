@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount, beforeUpdate, afterUpdate } from 'svelte';
 	import { dataLibrary } from '$lib/data-library.js';
 
 	export let id;
@@ -9,19 +9,20 @@
 	export let frequency = [1, 1];
 
 	let directInput = 0;
+	let timer;
 
 	const WEIGHT_LIMIT = 2;
 	const DEFAULT_WEIGHT = 1;
 	const DEFAULT_DISTANCE = 1;
 
-	$: motion;
-	$: motionMenu = dataLibrary.find((el) => el.label === motion.type);
-	$: timeRange = [0];
 	// the time added by weight is applied if the weight is over the weight threshold
 	// weight threshold should be set dynamically and support both imperial and metric
 	// "weightTime" is 1 TMU per pound
 	// TODO: Account for metric
 	$: weightTime = motion.weight - WEIGHT_LIMIT > 2 ? motion.weight - WEIGHT_LIMIT : 0;
+	$: motionMenu = dataLibrary.find((el) => el.label === motion.type);
+	$: optionMenu = motionMenu.options.find((el) => el.label === motion.option);
+	$: timeRange = optionMenu ? optionMenu.values : motionMenu.options[0].values;
 	$: compoundFrequency = frequency.reduce((product, factor) => product * factor);
 	$: time =
 		((timeRange.find((int) => int >= motion.distance) || timeRange[timeRange.length - 1]) +
@@ -32,19 +33,24 @@
 
 	const updateDirectTime = () => {
 		timeRange[0] = directInput;
+		updateElement();
 	};
+
+	onMount(async () => {
+		console.log('time', motion.type);
+	});
 
 	/*
 		Gets the motion code and time ranges from the selected option
 	*/
 	const updateOption = () => {
-		const optionMenu = motionMenu.options.find((el) => el.label === motion.option);
 		if (optionMenu.values) {
 			motion.code = optionMenu.code;
 			timeRange = optionMenu.values;
 		} else if (optionMenu.modifier) {
 			// then do stuff for those edge cases of UAS with its tertiary modifier options
 		}
+		updateElement();
 	};
 
 	/*
@@ -52,30 +58,25 @@
 	resets the motion code option and time. Unless a direct input
 	*/
 	const updateMotion = () => {
-		if (motion.type === 'Direct Input') {
-			motion.code = 'DI';
-			timeRange = [0];
-			delete motion.option;
-		} else {
-			motion.option = motionMenu.options[0].label;
-			motion.code = motionMenu.options[0].code;
-			timeRange = motionMenu.options[0].values;
+		motion.option = motionMenu.options[0].label;
+		motion.code = motionMenu.options[0].code;
+		timeRange = motionMenu.options[0].values;
 
-			if (!motionMenu.weight) {
-				delete motion.weight;
-			} else {
-				motion.weight = DEFAULT_WEIGHT;
-			}
-			if (!motionMenu.distance) {
-				delete motion.distance;
-			} else {
-				motion.distance = DEFAULT_DISTANCE;
-			}
+		if (!motionMenu.weight) {
+			delete motion.weight;
+		} else {
+			motion.weight = DEFAULT_WEIGHT;
 		}
+		if (!motionMenu.distance) {
+			delete motion.distance;
+		} else {
+			motion.distance = DEFAULT_DISTANCE;
+		}
+
+		updateElement();
 	};
 
 	const updateElement = () => {
-		console.log('ELEMENT update element');
 		dispatch('update', {
 			id: id
 		});
@@ -83,10 +84,9 @@
 </script>
 
 <li class="line-item">
-	<div class="line-item row">
+	<!-- 	<div class="line-item row">
 		<pre>{JSON.stringify(motion, undefined, 2)}</pre>
-		<!-- 		<pre>{timeRange} | {weightTime}</pre> -->
-	</div>
+	</div> -->
 	<div class="line-item row">
 		<div
 			class="description"
@@ -94,8 +94,8 @@
 			bind:innerHTML={description}
 			on:change={updateElement}
 		/>
-		<input type="number" min="1" bind:value={frequency[0]} />
-		<input type="number" min="1" bind:value={frequency[1]} />
+		<input type="number" min="1" bind:value={frequency[0]} on:change={updateElement} />
+		<input type="number" min="1" bind:value={frequency[1]} on:change={updateElement} />
 		<time class="element__time">{time.toFixed(2)}</time>
 	</div>
 
@@ -106,12 +106,11 @@
 			{#each dataLibrary as motion}
 				<option value={motion.label}>{motion.label}</option>
 			{/each}
-			<option value="Direct Input">Direct Input</option>
 		</select>
 
 		<!-- If direct input //-->
 		{#if motion.type === 'Direct Input'}
-			<input type="number" min="1" bind:value={directInput} on:change={updateDirectTime} />
+			<input type="number" min="1" bind:value={timeRange[0]} on:change={updateDirectTime} />
 			<!-- If not direct input //-->
 		{:else}
 			<select bind:value={motion.option} on:change={updateOption}>

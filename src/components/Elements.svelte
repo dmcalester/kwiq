@@ -16,7 +16,16 @@
 		await updateDoc(operationRef($page.params.routerId, operationId), {
 			elements: arrayUnion({
 				description: newElement.description,
-				time: newElement.time,
+				motion: {
+					type: 'Grasp',
+					option: 'Easy',
+					weight: 1,
+					distance: 1,
+					code: 'A1'
+				},
+				frequency: [1, 1],
+				order: elements.length,
+				time: 0,
 				createdAt: new Date()
 			})
 		});
@@ -24,11 +33,16 @@
 	};
 
 	const updateElement = async () => {
-		console.log('ELEMENTS update elements', $page.params.routerId);
+		console.log('ELEMENTS update elements', elements);
+
 		await updateDoc(operationRef($page.params.routerId, operationId), {
-			elements: elements
+			modifiedAt: new Date(),
+			elements: [...elements]
 		});
 	};
+
+	// article.tagList = [...article.tagList, input.value];
+	// article.tagList = [...article.tagList.slice(0, index), ...article.tagList.slice(index + 1)];
 
 	const deleteElement = async (e) => {
 		elements = elements.filter((el, index) => index !== e.detail.id);
@@ -47,6 +61,7 @@
 		</li>
 		<!-- TODO replace with elements as element(id) //-->
 		{#each elements as element, i}
+			<pre>{JSON.stringify(element, undefined, 2)}</pre>
 			<Element
 				id={i}
 				bind:time={element.time}

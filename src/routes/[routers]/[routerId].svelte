@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import { afterNavigate } from '$app/navigation';
+	import { beforeUpdate } from 'svelte';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { doc, onSnapshot, query, orderBy, updateDoc } from 'firebase/firestore';
 	import { db, operationsCol, routerRef } from '$lib/fb.js';
 	import { _router, _operations } from '../../store.js';
@@ -30,6 +31,11 @@
 	const updateRouter = () => {
 		updateDoc(routerRef($page.params.routerId), { modifiedAt: new Date(), ...$_router });
 	};
+
+	beforeNavigate(() => {
+		$_operations = [];
+		$_router = {};
+	});
 
 	/* Load a Router and its operations */
 	afterNavigate(async () => {

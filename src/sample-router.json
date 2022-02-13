@@ -58,7 +58,10 @@
 					"description": "COPIED TO. This element was copied to another operation.",
 					"createdBy": "Trevor McAlester",
 					"createdAt": "2015-07-23T18:52:07.414Z",
-					"time": 50,
+					"time": {
+						"base": 50,
+						"pfd": 50.4
+					}
 					"motion": {
 						"type": "Get & Place",
 						"option": "Easy",

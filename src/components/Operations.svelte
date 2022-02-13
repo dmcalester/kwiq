@@ -27,7 +27,7 @@
 			number: newOperation.number,
 			createdAt: new Date(),
 			time: 0,
-			order: operations.length + 1,
+			order: $_operations.length + 1,
 			elements: []
 		});
 		newOperation = {};

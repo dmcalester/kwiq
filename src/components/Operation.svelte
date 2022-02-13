@@ -13,6 +13,7 @@
 	export let number;
 	export let time = 0;
 	export let pfd = 1;
+	export let pfdTime = 0;
 	export let elements;
 
 	const dispatch = createEventDispatcher();
@@ -20,7 +21,7 @@
 	/* TODO: Add memory for open/closed on details */
 
 	$: time = elements.reduce((sum, el) => sum + parseFloat(el.time), 0);
-	$: pfdTime = time * pfd + time;
+	$: pfdTime = time + time * (pfd / 100);
 
 	const updateOperation = async () => {
 		console.log('update operations');
@@ -59,9 +60,8 @@
 				<input type="number" min="1" bind:value={pfd} />
 			</label> -->
 
-			<time class="operation__time"
-				>{time.toFixed(2).padEnd(2, 0)} | {pfdTime.toFixed(2).padEnd(2, 0)}</time
-			>
+			<time class="operation__time">{time.toFixed(2).padEnd(2, 0)}</time>
+			{#if pfdTime} <time class="operation__time">{pfdTime.toFixed(2).padEnd(2, 0)}</time> {/if}
 			<button class="action-item action-item--delete" on:click={dispatch('delete', { id: id })}
 				>×</button
 			>

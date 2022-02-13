@@ -24,7 +24,7 @@
 					code: 'A1'
 				},
 				frequency: [1, 1],
-				order: elements.length,
+				order: elements.length || 0,
 				time: 0,
 				createdAt: new Date()
 			})
@@ -75,7 +75,6 @@
 	{/if}
 
 	<li class="line-item line-item--new">
-		<div><input type="number" min="0" step="0.1" bind:value={newElement.time} /></div>
 		<div><input type="text" bind:value={newElement.description} /></div>
 		<button class="action-item" on:click={addElement}>+</button>
 	</li>

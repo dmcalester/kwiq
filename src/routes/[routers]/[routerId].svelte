@@ -20,6 +20,7 @@
 			var routerTime = $_operations.reduce((sum, op) => sum + parseFloat(op.time), 0) + setupTime;
 			var routerPfdTime =
 				$_operations.reduce((sum, op) => sum + parseFloat(op.pfdTime), 0) + setupTime;
+
 			if (routerTime !== $_router.time) {
 				$_router.time = routerTime;
 				$_router.pfdTime = routerPfdTime;
@@ -64,20 +65,11 @@
 <div id="detail">
 	<div class="detail__header">
 		<h1 contenteditable="true" bind:innerHTML={$_router.description} on:blur={updateRouter} />
-		<time
-			>{#if $_router.time} {$_router.time.toFixed(2)} | {$_router.pfdTime.toFixed(2)} {/if}</time
-		>
+		{#if $_router.time}<time>{$_router.time.toFixed(2)}</time>{/if}
+		{#if $_router.pfdTime} <time>{$_router.pfdTime.toFixed(2)}</time> {/if}
 	</div>
 
 	<section id="operations">
-		<pre style="color: #fff;">{JSON.stringify($_router, undefined, 2)}</pre>
 		<Operations />
 	</section>
-
-	<!--
-	<div class="debug">
-		<pre>{JSON.stringify($_router, undefined, 2)}</pre>
-		<pre>{JSON.stringify($_operations, undefined, 2)}</pre>
-	</div>
-	//-->
 </div>

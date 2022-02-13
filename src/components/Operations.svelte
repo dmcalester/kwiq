@@ -44,10 +44,10 @@
 
 <ol class="list">
 	<!-- Operation Header //-->
-	<li class="line-item list-header list-header--operation">
-		<div class="operation__number">#</div>
-		<div class="operation__desscription">Description</div>
-		<div class="time operation__time">Time</div>
+	<li class="list-header--operation list-header line-item">
+		<div class="fixed operation__number"><abbr title="Operation Number">Op #</abbr></div>
+		<div class="flex operation__desscription">Description</div>
+		<div class="fixed operation__time">Time</div>
 	</li>
 	{#if $_operations && $_operations.length}
 		<!-- Operations //-->

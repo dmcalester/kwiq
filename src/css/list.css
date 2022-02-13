@@ -20,7 +20,7 @@
 .list__routers {
 	padding: 0;
 	margin: var(--space-03) 0;
-	list-style: none;
+	/* 	list-style: none; */
 }
 
 .list-router {

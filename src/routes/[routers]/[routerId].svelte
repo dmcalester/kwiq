@@ -64,9 +64,18 @@
 
 <div id="detail">
 	<div class="detail__header">
-		<h1 contenteditable="true" bind:innerHTML={$_router.description} on:blur={updateRouter} />
-		{#if $_router.time}<time>{$_router.time.toFixed(2)}</time>{/if}
-		{#if $_router.pfdTime} <time>{$_router.pfdTime.toFixed(2)}</time> {/if}
+		<h1
+			class="flex router--description"
+			contenteditable="true"
+			bind:innerHTML={$_router.description}
+			on:blur={updateRouter}
+		/>
+		<div class="fixed time">
+			{#if $_router.pfdTime}
+				<time class="time--pfd"><b>{$_router.pfdTime.toFixed(2)}</b></time>
+			{/if}
+			{#if $_router.time}<time class="time--base">{$_router.time.toFixed(2)}</time>{/if}
+		</div>
 	</div>
 
 	<section id="operations">

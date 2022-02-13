@@ -54,14 +54,13 @@
 
 <ol class="list elements">
 	{#if elements && elements.length}
-		<li class="list-header line-item">
-			<div class="element__description">Description</div>
-			<div class="element__frequency">Frequency</div>
-			<div class="element__time">Time</div>
+		<li class="line-item list-header list-header--elements ">
+			<div class="flex element__description">Description</div>
+			<div class="fixed element__frequency">Frequency</div>
+			<div class="fixed element__time">Time</div>
 		</li>
 		<!-- TODO replace with elements as element(id) //-->
 		{#each elements as element, i}
-			<pre>{JSON.stringify(element, undefined, 2)}</pre>
 			<Element
 				id={i}
 				bind:time={element.time}

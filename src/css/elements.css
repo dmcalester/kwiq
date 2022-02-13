@@ -1,23 +1,63 @@
 /* elements.css */
 
 .elements {
-	padding-left: var(--space-06);
+	list-style: outside;
+	list-style-type: decimal;
+	padding-left: calc(
+		var(--disclosure-arrow-width) + var(--gap-for-columns) + var(--padding-for-rows)
+	);
 	background-color: #999;
 	border-top: 1px solid #333;
 }
 
-.line-item {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+.element {
+	border-bottom: 1px solid #ddd;
 }
 
-.line-item .row {
-	width: 100%;
+.element:focus-within .line-item:not(:first-of-type) {
+	display: flex;
+}
+
+.element .line-item:first-of-type {
+	border-bottom: 1px solid #ddd;
+}
+
+.element:not(:focus-within) .line-item:not(:first-of-type) {
+	display: none;
+}
+
+.inline-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.frequency {
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	gap: var(--space-01);
+}
+
+.frequency input {
+	width: 30%;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font-size: var(--font-02);
+}
+
+.frequency--simple {
+	text-align: right;
+}
+
+.frequency input[type='number']::-webkit-inner-spin-button,
+.frequency input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 .element__time {
-	margin-left: auto;
-	margin-right: 0;
-	width: auto;
+	text-align: right;
 }

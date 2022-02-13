@@ -36,7 +36,7 @@
 </script>
 
 <li class="operation">
-	<details class="operation__detail">
+	<details open class="operation__detail">
 		<summary class="line-item">
 			<div
 				contenteditable="true"
@@ -44,7 +44,7 @@
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
 				use:debounce={{ number, func: updateOperation, duration: 500 }}
-				class="number operation__number"
+				class="fixed id"
 			/>
 			<div
 				contenteditable="true"
@@ -52,19 +52,34 @@
 				on:click={disregardAction}
 				on:keyup={disregardSpace}
 				use:debounce={{ description, func: updateOperation, duration: 500 }}
-				class="description operation__description"
+				class="flex"
 			/>
+			{#if pfdTime}
+				<time class="fixed time"><b>{pfdTime.toFixed(2).padEnd(2, 0)}</b></time>
+			{/if}
 
-			<!-- 			<label>
-				PF&D
-				<input type="number" min="1" bind:value={pfd} />
-			</label> -->
+			<!-- 				
+				<div
+					contenteditable="true"
+					bind:innerHTML={number}
+					on:click={disregardAction}
+					on:keyup={disregardSpace}
+					use:debounce={{ number, func: updateOperation, duration: 500 }}
+					class="fixed"
+				/>
+				<div
+					contenteditable="true"
+					bind:innerHTML={description}
+					on:click={disregardAction}
+					on:keyup={disregardSpace}
+					use:debounce={{ description, func: updateOperation, duration: 500 }}
+					class="flex"
+				/>
 
-			<time class="operation__time">{time.toFixed(2).padEnd(2, 0)}</time>
-			{#if pfdTime} <time class="operation__time">{pfdTime.toFixed(2).padEnd(2, 0)}</time> {/if}
-			<button class="action-item action-item--delete" on:click={dispatch('delete', { id: id })}
-				>×</button
-			>
+				{#if pfdTime}
+					<time class="fixed">{pfdTime.toFixed(2).padEnd(2, 0)}</time>
+				{/if} -->
+			<!-- 				<button class="action-item action-item--delete" on:click={dispatch('delete', { id: id })}>×</button> -->
 		</summary>
 
 		<Elements operationId={id} bind:elements />

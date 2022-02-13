@@ -79,30 +79,44 @@
 	};
 </script>
 
-<li class="line-item">
-	<!-- 	<div class="line-item row">
-		<pre>{JSON.stringify(motion, undefined, 2)}</pre>
-	</div> -->
-	<div class="line-item row">
+<li class="element">
+	<div class="line-item">
 		<div
-			class="description"
+			class="flex description"
 			contenteditable="true"
 			bind:innerHTML={description}
 			on:change={updateElement}
 		/>
-		<input type="number" min="1" bind:value={frequency[0]} on:change={updateElement} />
-		<input type="number" min="1" bind:value={frequency[1]} on:change={updateElement} />
-		<time class="element__time">{time.toFixed(2)}</time>
+		<div class="fixed frequency">
+			<input
+				class="frequency--simple"
+				type="number"
+				min="1"
+				bind:value={frequency[0]}
+				on:change={updateElement}
+			/>
+			<span>&times;</span>
+			<input
+				class="frequency--compound"
+				type="number"
+				min="1"
+				bind:value={frequency[1]}
+				on:change={updateElement}
+			/>
+		</div>
+		<time class="fixed element__time"><b>{time.toFixed(2)}</b></time>
 	</div>
 
-	<div class="line-item row">
+	<div class="line-item">
 		<!-- The primary action type //-->
-
-		<select bind:value={motion.type} on:change={updateMotion}>
-			{#each dataLibrary as motion}
-				<option value={motion.label}>{motion.label}</option>
-			{/each}
-		</select>
+		<label class="inline-input"
+			><span>Motion</span>
+			<select bind:value={motion.type} on:change={updateMotion}>
+				{#each dataLibrary as motion}
+					<option value={motion.label}>{motion.label}</option>
+				{/each}
+			</select>
+		</label>
 
 		<!-- If direct input //-->
 		{#if motion.type === 'Direct Input'}
@@ -118,14 +132,18 @@
 			<!-- The modified action //-->
 
 			{#if motionMenu.distance}
-				<label for="weight">Distance</label>
-				<input name="distance" type="number" min="0" step="0.1" bind:value={motion.distance} />
+				<label class="inline-input" for="weight"
+					><span>Distance</span>
+					<input name="distance" type="number" min="0" step="0.1" bind:value={motion.distance} />
+				</label>
 			{/if}
 			{#if motionMenu.weight}
-				<label for="weight">Weight</label>
-				<input name="weight" type="number" min="0" step="0.1" bind:value={motion.weight} />
+				<label class="inline-input" for="weight"
+					><span>Weight</span>
+					<input name="weight" type="number" min="0" step="0.1" bind:value={motion.weight} />
+				</label>
 			{/if}
 		{/if}
 	</div>
-	<button class="action-item" on:click={dispatch('delete', { id: id })}>×</button>
+	<!-- 	<button class="action-item" on:click={dispatch('delete', { id: id })}>×</button> -->
 </li>

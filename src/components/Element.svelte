@@ -80,7 +80,7 @@
 </script>
 
 <li class="element">
-	<div class="line-item">
+	<div class="line-item row">
 		<div
 			class="flex description"
 			contenteditable="true"
@@ -107,7 +107,7 @@
 		<time class="fixed element__time"><b>{time.toFixed(2)}</b></time>
 	</div>
 
-	<div class="line-item">
+	<div class="line-item element-details">
 		<!-- The primary action type //-->
 		<label class="inline-input"
 			><span>Motion</span>
@@ -120,7 +120,13 @@
 
 		<!-- If direct input //-->
 		{#if motion.type === 'Direct Input'}
-			<input type="number" min="1" bind:value={directInput} on:change={updateDirectTime} />
+			<input
+				class="small-input"
+				type="number"
+				min="1"
+				bind:value={directInput}
+				on:change={updateDirectTime}
+			/>
 			<!-- If not direct input //-->
 		{:else}
 			<select bind:value={motion.option} on:change={updateOption}>
@@ -134,13 +140,27 @@
 			{#if motionMenu.distance}
 				<label class="inline-input" for="weight"
 					><span>Distance</span>
-					<input name="distance" type="number" min="0" step="0.1" bind:value={motion.distance} />
+					<input
+						class="small-input"
+						name="distance"
+						type="number"
+						min="0"
+						step="0.1"
+						bind:value={motion.distance}
+					/>
 				</label>
 			{/if}
 			{#if motionMenu.weight}
 				<label class="inline-input" for="weight"
 					><span>Weight</span>
-					<input name="weight" type="number" min="0" step="0.1" bind:value={motion.weight} />
+					<input
+						class="small-input"
+						name="weight"
+						type="number"
+						min="0"
+						step="0.1"
+						bind:value={motion.weight}
+					/>
 				</label>
 			{/if}
 		{/if}

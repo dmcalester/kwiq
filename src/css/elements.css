@@ -3,23 +3,36 @@
 .elements {
 	list-style: outside;
 	list-style-type: decimal;
-	padding-left: calc(
+	/* 	padding-left: calc(
 		var(--disclosure-arrow-width) + var(--gap-for-columns) + var(--padding-for-rows)
-	);
+	); */
 	background-color: #999;
 	border-top: 1px solid #333;
+	overflow: hidden;
 }
 
 .element {
 	border-bottom: 1px solid #ddd;
 }
 
-.element:focus-within .line-item:not(:first-of-type) {
-	display: flex;
+.element:focus-within {
+	display: block;
+	z-index: 10;
+	background: #eee;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	box-shadow: inset 0 0 12px 0 rgba(0, 0, 0, 0.23);
 }
 
-.element .line-item:first-of-type {
-	border-bottom: 1px solid #ddd;
+.element:focus-within .line-item {
+	background: none;
+}
+
+.element-details {
+	padding-top: var(--space-01);
+
+	font-size: var(--font-01);
+	font-weight: 500;
 }
 
 .element:not(:focus-within) .line-item:not(:first-of-type) {
@@ -30,6 +43,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	gap: var(--space-02);
+}
+
+.small-input {
+	width: var(--space-08);
 }
 
 .frequency {

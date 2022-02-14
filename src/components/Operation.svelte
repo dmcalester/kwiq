@@ -35,7 +35,7 @@
 	};
 </script>
 
-<li class="operation">
+<li class="operation row">
 	<details open class="operation__detail">
 		<summary class="line-item">
 			<div

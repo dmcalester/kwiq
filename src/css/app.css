@@ -43,6 +43,10 @@
 	--text-color--secondary: rgba(255, 255, 255, 0.5);
 }
 
+* {
+	box-sizing: box;
+}
+
 body {
 	font-family: sans-serif;
 	margin: 0;
@@ -196,4 +200,13 @@ summary::-webkit-details-marker {
 
 	/* 	padding-left: var(--space-06);
 	padding-right: var(--space-08); */
+}
+
+.row:hover {
+	background-color: #e2f2ff;
+	background-color: color(display-p3 0.94 0.973 1);
+}
+
+.line-item--new {
+	background-color: #333;
 }

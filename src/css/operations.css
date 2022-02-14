@@ -2,6 +2,9 @@
 
 #operations {
 	color: #000;
+	border-radius: 6px;
+	overflow: hidden;
+	margin: 1rem;
 }
 
 .operation {

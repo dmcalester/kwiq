@@ -11,6 +11,7 @@
 
 	onMount(async () => {
 		onSnapshot(queryAllRouters, (querySnapshot) => {
+			console.log(querySnapshot);
 			routers = querySnapshot.docs.map((doc) => {
 				return { id: doc.id, ...doc.data() };
 			});

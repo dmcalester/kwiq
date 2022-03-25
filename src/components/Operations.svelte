@@ -38,9 +38,9 @@
 	};
 </script>
 
-<header class="operations__header">
+<!-- <header class="operations__header">
 	<h1 class="operations__meta">{$_operations.length} Operations</h1>
-</header>
+</header> -->
 
 <ol class="list">
 	<!-- Operation Header //-->

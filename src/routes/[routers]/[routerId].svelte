@@ -70,11 +70,13 @@
 			bind:innerHTML={$_router.description}
 			on:blur={updateRouter}
 		/>
-		<div class="fixed time">
+		<div class="time detail__time">
 			{#if $_router.pfdTime}
-				<time class="time--pfd"><b>{$_router.pfdTime.toFixed(2)}</b></time>
+				<time class="time--pfd">{$_router.pfdTime.toFixed(2)}&nbsp;<span>TMU</span></time>
 			{/if}
-			{#if $_router.time}<time class="time--base">{$_router.time.toFixed(2)}</time>{/if}
+			{#if $_router.time}
+				<time class="time--base">{$_router.time.toFixed(2)}</time>
+			{/if}
 		</div>
 	</div>
 
